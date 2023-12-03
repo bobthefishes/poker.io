@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="css/home.css" id="css-styles">
+</head>
+
+<body>
+    <div class="menu_bar">
+        <div class="menu_link">
+            <a href="home.html">HOME</a>
+        </div>
+        <div class="menu_link">
+            <a href="leaderboard.html">LEADERBOARDS</a>
+        </div>
+        <div class="title_section">
+            <a href="play.html">
+                <h1 class="title">POKER.</h1>
+            </a>
+        </div>
+        <div class="menu_link">
+            <a class="user_login" href="login.html">LOG IN</a>
+        </div>
+        <div class="menu_link">
+            <a>ACCOUNT</a>
+        </div>
+    </div>
+    <!--<input type="checkbox" class="theme-checkbox" onclick="theme_change()">-->
+    <div class="how_to_play_container content_box">
+        <h1>How to play:</h1>
+        <a href="https://www.wikihow.com/Play-Poker" target="_blank" class="link">Basic rules</a>
+        <a href="https://upswingpoker.com/advanced-tips-for-poker/" target="_blank" class="link">Advanced
+            strategy</a>
+    </div>
+    <div class="other_games_container content_box">
+        <h1>Other games:</h1>
+        <a href="blackjack/play.html" class="link">Blackjack</a>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+    </script>
+    <script src="js/home.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-image: url("../assets/blurred-background.png");
+    background-color: var(--body_colour);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.creds_container {
+    background-color: rgb(228, 229, 211);
+    color: black;
+    border-radius: 20px;
+    margin: 3%;
+    position: absolute;
+    top: 25%;
+    height: 320px;
+    width: 310px;
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(50, 50, 93, 0.2) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.uname,
+.pwd,
+.mny,
+.fnm {
+    margin: 5px;
+    height: 20px;
+    width: 200px;
+    border-radius: 5px;
+    font-size: medium;
+    border: solid white;
+    padding: 2%;
+}
+
+.mny,
+.fnm {
+    width: 90px;
+}
+
+.submit {
+    background: #5E5DF0;
+    border-radius: 999px;
+    box-shadow: #5E5DF0 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    outline: 0 solid transparent;
+    padding: 8px 18px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
+    margin: 5px;
+
+    &:hover {
+        background-color: white;
+        color: #5E5DF0;
+    }
+}
+
+.incorrect,
+.invalid {
+    color: red;
+}
+
+.switch_fun_btn {
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+html {
+    --font_colour: rgb(42, 42, 44);
+    --body_colour: rgb(10, 10, 20);
+    --menu_colour: rgb(255, 255, 255);
+    --menu_item_hover_colour: rgb(125, 125, 125);
+    --menu_item_spacing: 15px;
+    --title_colour: #5E5DF0;
+    --title_border_colour: white;
+}
