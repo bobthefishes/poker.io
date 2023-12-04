@@ -8,5 +8,5 @@ socket.on("invalid details", (type) => {
     document.querySelector(".invalid").innerHTML = `Invalid ${type}`
 })
 socket.on("logged in", () =>{
-    window.location.href = "http://localhost:8000/play.html";
+    window.location.href = "./play";
 })

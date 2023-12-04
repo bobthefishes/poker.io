@@ -129,10 +129,10 @@ io.on("connection", (socket) => {
         }
         socket.emit("send location");
         socket.on("window location", (location) => {
-            if (location === "http://localhost:8000/play.html"){
+            if (location === "https://poker-io.glitch.me/play"){
                 if (!accountbyUID[UID]){
                     //add alert to log in
-                    socket.emit("redirect", ("http://localhost:8000/login.html"));
+                    socket.emit("redirect", ("https://poker-io.glitch.me/login"));
                 }else{
                     socket.emit("load play page");
                 }
@@ -158,21 +158,22 @@ function sendhtml(req,res,file){
     res.sendFile(file_path);
 }
 app.get("/", (req, res) => {
+    res.redirect("/home");
     sendhtml(req, res, "home.html");
 });
-app.get("/leaderboard.html", (req, res) => {
+app.get("/leaderboard", (req, res) => {
     sendhtml(req, res, "leaderboard.html");
 });
-app.get("/home.html", (req, res) => {
+app.get("/home", (req, res) => {
     sendhtml(req, res, "home.html");
 });
-app.get("/login.html", (req, res) => {
+app.get("/login", (req, res) => {
     sendhtml(req, res, "login.html");
 });
-app.get("/play.html", (req, res) => {
+app.get("/play", (req, res) => {
     sendhtml(req, res, "play.html");
 });
-app.get("/signup.html", (req, res) => {
+app.get("/signup", (req, res) => {
     sendhtml(req, res, "signup.html");
 });
 http.listen(port, () => {
