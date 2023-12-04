@@ -247,26 +247,14 @@ function hit() {
     newCard.classList.add("player_card");
     newCard.classList.add(`card${num_hits}`);
     turn_over_playerCard(newCard);
-    if (player_hand === 21) {
+    
+    while (player_hand > 21 && player_aces > 0) {
+      player_hand -= 10;
+      player_aces -= 1;
+    }
+    if (player_hand === 21 || (player_hand > 21 && player_aces === 0)) {
       document.querySelector(".hit_btn").disabled = true;
       stand();
-    } 
-    else if (player_hand > 21 && player_aces === 0) {
-      document.querySelector(".hit_btn").disabled = true;
-      stand();
-    } 
-    else if (player_hand > 21 && player_aces > 0) {
-      for (let i = 0; i < n; i++) {
-        player_hand = player_hand - 10;
-        player_aces -= 1;
-        if (player_hand <= 21) {
-          break;
-        }
-      }
-      if (player_hand > 21) {
-        document.querySelector(".hit_btn").disabled = true;
-        stand();
-      }
     }
     console.log(`player hand: ${player_hand}`);
   }
