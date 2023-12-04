@@ -143,7 +143,6 @@ function go_again() {
   var n = 0;
   var m = 0;
   blackjack = false;
-  bust = false;
   const playerCards = document.querySelectorAll(".player_card");
   playerCards.forEach((card) => {
     n++;
