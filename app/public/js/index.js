@@ -346,6 +346,7 @@ function return_winner() {
     }
     else {
         console.log("Split")
+      
     }
 }
 socket.on("joined room", (room, account) => {

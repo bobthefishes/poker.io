@@ -175,6 +175,9 @@ app.get("/play", (req, res) => {
 app.get("/signup", (req, res) => {
     sendhtml(req, res, "signup.html");
 });
+app.get("/blackjack", (req, res) => {
+    sendhtml(req, res, "blackjack.html");
+});
 http.listen(port, () => {
     console.log(`Server is listening on port ${port}`)
 })
