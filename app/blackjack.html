@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack</title>
+    <link rel="icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="css/blackjack.css" id="css-styles">
+</head>
+
+<body>
+    <div class="menu_bar">
+        <div class="menu_link">
+            <a href="home">HOME</a> <!--move from <a> to <p>, switch onclick() to <div>-->
+        </div>
+        <div class="menu_link">
+            <a href="contactpage">CONTACT</a>
+        </div>
+        <div class="title_section">
+            <a href="poker">
+                <h1 class="title">POKER.</h1>
+            </a>
+        </div>
+        <div class="menu_link">
+            <a class="user_login" href="login">LOGIN</a>
+        </div>
+        <div class="menu_link">
+            <a>ACCOUNT</a>
+        </div>
+    </div>
+    <h1 class="blackjack_title">~BLACKJACK~</h1>
+    <p class="bet_info">Minimum bet £50, maximum £999</p>
+    <h1 class="stack"></h1>
+    <div class="play_again_container">
+        <button class="play_again_btn button" onclick="go_again()">Play Again</button>
+    </div>
+    <div class="dealer_cards">
+        <div class="card dealer_card card1"></div>
+        <div class="card dealer_card card2"></div>
+    </div>
+    <div class="player_cards">
+        <div class="card player_card card1"></div>
+        <div class="card player_card card2"></div>
+        <button class="hit_btn button" onclick="hit()">Hit</button>
+        <button class="stand_btn button" onclick="stand()">Stand</button>
+    </div>
+    <div>
+        <div class="testing_container">
+            <p>Testing stuff</p>
+            <p class="winner">Winner:</p>
+        </div>
+    </div>
+    <div>
+        <div class="betting_container">
+            <p id="betting_text">Bet (£):</p>
+            <div>
+                <input type="text" class="bet_input" name="" oninput="handle_betInput()" placeholder="Bet...">
+                <button class="confirm_bet_btn button" onclick="make_bet()">Confirm Bet</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/blackjack.js"></script>
+</body>
+
+</html>
