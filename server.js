@@ -118,18 +118,10 @@ io.on("connection", (socket) => {
         });
         if (accountbyUID[UID]){
             socket.emit("logged in");
+            socket.emit("load play page");
+        }else{
+            socket.emit("check location");
         }
-        socket.emit("send location");
-        socket.on("window location", (location) => {
-            if (location.includes("/poker")){
-                if (!accountbyUID[UID]){
-                    //add alert to log in
-                    socket.emit("redirect", ("login"));
-                }else{
-                    socket.emit("load play page");
-                }
-            }
-        })
         socket.on("create room", () => {create_room(socket, UID)});
         socket.on("join room", room => {join_room(socket,room, UID)})
         socket.on("sign up", (uname,pwd,fname) => {sign_up(socket,UID,uname,pwd,fname)})

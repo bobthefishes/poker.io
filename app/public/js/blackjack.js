@@ -234,6 +234,7 @@ let num_hits_dealer = 2;
 
 function hit() {
   if (done_deal) {
+    var n = player_aces;
     num_hits++;
     const newCard = document.createElement("div");
     document.querySelector(".player_cards").appendChild(newCard);
@@ -244,15 +245,16 @@ function hit() {
     if (player_hand === 21) {
       document.querySelector(".hit_btn").disabled = true;
       stand();
-    } else if (player_hand > 21 && player_aces === 0) {
+    } 
+    else if (player_hand > 21 && player_aces === 0) {
       document.querySelector(".hit_btn").disabled = true;
       stand();
-    } else if (player_hand > 21 && player_aces > 0) {
-      for (let i = 0; i < player_aces; i++) {
+    } 
+    else if (player_hand > 21 && player_aces > 0) {
+      for (let i = 0; i < n; i++) {
         player_hand = player_hand - 10;
+        player_aces -= 1;
         if (player_hand <= 21) {
-          document.querySelector(".hit_btn").disabled = true;
-          stand();
           break;
         }
       }
