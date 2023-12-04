@@ -56,9 +56,12 @@ function turn_over_playerCard(card) {
   card.style.backgroundSize = "100% 109%";
   if (next_card[0] === 11 || next_card[0] === 12 || next_card[0] === 13) {
     value = 10;
-  } else if (next_card[0] === 14) {
+  } 
+  else if (next_card[0] === 14) {
     value = 11;
-  } else {
+    player_aces = player_aces + 1;
+  } 
+  else {
     value = parseInt(next_card[0]);
   }
   player_hand = player_hand + value;
@@ -72,10 +75,12 @@ function turn_over_dealerCard(card) {
   card.style.backgroundSize = "100% 109%";
   if (next_card[0] === 11 || next_card[0] === 12 || next_card[0] === 13) {
     value = 10;
-  } else if (next_card[0] === 14) {
+  } 
+  else if (next_card[0] === 14) {
     value = 11;
-    dealer_aces++;
-  } else {
+    dealer_aces = dealer_aces + 1;
+  } 
+  else {
     value = parseInt(next_card[0]);
   }
   dealer_hand = dealer_hand + value;
@@ -206,7 +211,7 @@ function dealer_stand() {
     stack = stack + 2 * pot;
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
   } else if (winner === "player" && blackjack === true) {
-    stack = stack + 1.5 * (2 * pot);
+    stack = stack + (pot + (1.5 * pot));
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
   } else if (winner === "push") {
     stack = stack + pot;
