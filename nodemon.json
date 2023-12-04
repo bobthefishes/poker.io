@@ -1,4 +1,0 @@
-{
-    "ignore": ["accounts.json"],
-    "watch": ["*.js"]
-  }
