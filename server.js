@@ -55,7 +55,7 @@ function login(socket,UID,uname,pwd){
         socket.emit("invalid details", "wrong username");
     }
 }
-function sign_up(socket,UID,uname,pwd,fname){
+function sign_up(socket,UID,uname,                                                     ,fname){
     console.log(uname,pwd,fname)
     if (accountbyUname[uname]){
         socket.emit("invalid details", "used username");
