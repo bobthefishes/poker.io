@@ -112,9 +112,17 @@ io.on("connection", (socket) => {
             }
         }
         socket.on("disconnect", ()=>{
+          try{
             storedUID[UID].disconnecttimer = setTimeout(() => {
                 delete storedUID[UID];
             }, 10000);
+          }
+          catch(error){
+            console.log(storedUID);
+            console.log(UID);
+            console.log(error);
+            throw error.message;
+          }
         });
         if (accountbyUID[UID]){
             socket.emit("logged in");
