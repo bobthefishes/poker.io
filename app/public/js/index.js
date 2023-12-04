@@ -346,7 +346,10 @@ function return_winner() {
     }
     else {
         console.log("Split")
-      
+        stack = stack + (potsize).tofixed(2);
+        document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
+        potsize = 0;
+        document.querySelector(".pot_size").innerHTML = `Pot: ${potsize}`;
     }
 }
 socket.on("joined room", (room, account) => {
