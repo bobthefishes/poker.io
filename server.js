@@ -111,12 +111,7 @@ io.on("connection", (socket) => {
                 storedUID[UID] = {"disconnecttimer":null};
             }
         }
-        console.log(UID);
-        console.log(storedUID)
         socket.on("disconnect", ()=>{
-            console.log(storedUID);
-            console.log(UID);
-            console.log(socket.id);
             storedUID[UID].disconnecttimer = setTimeout(() => {
                 delete storedUID[UID];
             }, 10000);
