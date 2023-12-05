@@ -3,7 +3,8 @@ body {
   height: 99vh;
   margin: 0px;
   color: white;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
   background-position: center, center;
   background-size: 250px;
   background-repeat: no-repeat;
@@ -13,7 +14,7 @@ body {
 
 .menu_bar {
   height: 6.4%;
-  width: 98%;
+  width: 100%;
   margin: 1%;
   margin-top: 0;
   display: flex;
@@ -24,7 +25,7 @@ body {
   font-weight: 700;
   border-radius: 0px 0px 15px 15px;
   /*box-shadow: #1f1f1f 0 10px 10px -10px;*/
-  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-shadow: #5e5df0 0 10px 20px -10px;
   z-index: 10;
 }
 
@@ -36,9 +37,9 @@ body {
   transition: transform 0.2s;
 
   &:hover {
-      /*background-color: var(--menu_item_hover_colour);*/
-      transform: scale(1.1);
-      cursor: pointer;
+    /*background-color: var(--menu_item_hover_colour);*/
+    transform: scale(1.1);
+    cursor: pointer;
   }
 }
 a {
@@ -50,14 +51,14 @@ a {
   /*border: solid var(--title_border_colour) 2px;*/
   border-radius: 15px;
   /*background-color: var(--title_colour);*/
-  box-shadow: #FFFFFF 0 3px 17px -10px;
+  box-shadow: #ffffff 0 3px 17px -10px;
   transition: transform 0.2s ease;
   padding: 0px 35px;
 
   &:hover {
-      color: var(--title_colour);
-      cursor: pointer;
-      transform: scale(1.3);
+    color: var(--title_colour);
+    cursor: pointer;
+    transform: scale(1.3);
   }
 }
 
@@ -114,12 +115,12 @@ a {
   background-color: var(--player_cards_background_colour);
 
   &:hover {
-      transform: scale(1.07);
+    transform: scale(1.07);
   }
 }
 
 .card1 {
-  left: 40px; 
+  left: 40px;
   z-index: 1;
 }
 .card2 {
@@ -195,7 +196,7 @@ a {
   position: absolute;
 
   &:hover {
-      transform: scale(1.07);
+    transform: scale(1.07);
   }
 }
 
@@ -206,13 +207,13 @@ a {
 }
 @keyframes flip {
   0% {
-      transform: rotateY(0deg);
+    transform: rotateY(0deg);
   }
   50% {
-      transform: rotateY(90deg);
+    transform: rotateY(90deg);
   }
   100% {
-      transform: rotateY(180deg);
+    transform: rotateY(180deg);
   }
 }
 
@@ -229,10 +230,9 @@ a {
   margin-right: 5px;
 }
 
-
 .button {
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   font-size: 100%;
   line-height: 24px;
@@ -260,7 +260,8 @@ a {
   border-radius: 20px 0px 0px 20px;
   margin: 2%;
   margin-right: 0;
-  box-shadow: rgba(174, 229, 255, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.5) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  box-shadow: rgba(174, 229, 255, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.5) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
   justify-content: space-between;
 }
 .betting_container.remove {
@@ -276,11 +277,10 @@ a {
   }
 }
 
-
 .confirm_bet_btn {
-  background: #5E5DF0;
+  background: #5e5df0;
   border-radius: 999px;
-  box-shadow: #5E5DF0 0 15px 25px -10px;
+  box-shadow: #5e5df0 0 15px 25px -10px;
   padding: 5%;
   margin-left: 5%;
   top: 36%;
@@ -289,7 +289,7 @@ a {
 
   &:hover {
     background-color: white;
-    color: #5E5DF0;
+    color: #5e5df0;
   }
 }
 
@@ -317,7 +317,7 @@ a {
 .hit_btn {
   position: absolute;
   border-radius: 999px;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   border: solid 1px white;
   padding: 8px 18px;
   margin: 5px;
@@ -328,8 +328,8 @@ a {
   margin: 2%;
   transform: scale(1.3);
   &:hover {
-      transform: scale(1.4);
-      background-color: #5E5DF0;
+    transform: scale(1.4);
+    background-color: #5e5df0;
   }
 }
 
@@ -337,7 +337,7 @@ a {
   color: white;
   position: absolute;
   border: solid 1px white;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   border-radius: 999px;
   padding: 8px 18px;
   margin: 5px;
@@ -367,7 +367,7 @@ html {
   --font_colour: rgb(42, 42, 44);
   /*--body_colour: rgb(24, 83, 54);8*/
   --body_colour: rgb(10, 10, 20);
-  --menu_colour: rgb(245, 245, 255);
+  --menu_colour: rgb(255, 255, 255);
   --menu_item_hover_colour: rgb(125, 125, 125);
   --dealer_cards_background_colour: rgba(42, 152, 164, 0.6);
   --player_cards_background_colour: rgba(174, 229, 255, 0.6);
@@ -379,7 +379,7 @@ html {
   --player_section_width: 95%;
   --dealer_section_height: 36%;
   --dealer_section_width: 95%;
-  --title_colour: #5E5DF0;
+  --title_colour: #5e5df0;
   --title_border_colour: white;
   --betting_background_colour: rgba(42, 152, 164, 0.6);
 }
