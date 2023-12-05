@@ -269,9 +269,16 @@ function dealer_hit() {
     newCard.classList.add("dealer_card");
     newCard.classList.add(`card${num_hits_dealer}`);
     turn_over_dealerCard(newCard);
+    while (dealer_hand > 21 && dealer_aces > 0) {
+      dealer_hand -= 10;
+      dealer_aces -= 1;
+    }
+    if (dealer_hand === 21 || (dealer_hand > 21 && dealer_aces === 0)) {
+      document.querySelector(".hit_btn").disabled = true;
+      dealer_stand();
+    }
     console.log(`dealer hand: ${dealer_hand}`);
   }
-  dealer_stand();
 }
 
 //winner
