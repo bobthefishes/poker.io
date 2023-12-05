@@ -211,7 +211,7 @@ function dealer_stand() {
     stack = stack + 2 * pot;
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
   } else if (winner === "player" && blackjack === true) {
-    stack = stack + (pot + (1.5 * pot));
+    stack = stack + (pot + (3/2 * pot));
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
   } else if (winner === "push") {
     stack = stack + pot;
