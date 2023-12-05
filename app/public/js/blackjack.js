@@ -124,54 +124,63 @@ function dealer_card() {
 }
 
 function hide_stuff() {
-  document.querySelector(".play_again_btn").style.visibility = "visible";
-  document.querySelector(".betting_container").classList.add("remove");
+  if (stack > 0) {
+    document.querySelector(".play_again_btn").style.visibility = "visible";
+    document.querySelector(".betting_container").classList.add("remove");
+  }
+  else {
+    document.querySelector(".play_again_btn").style.visibility = "visible";
+    document.querySelector(".play_again_btn").innerHTML = 'Broke!'
+    document.querySelector(".betting_container").classList.add("remove");
+  }
 }
 
 function go_again() {
-  player_aces = 0;
-  dealer_aces = 0;
-  bet_input.disabled = false;
-  bet_input.value = "";
-  done_deal = false;
-  done_stand = false;
-  done_bet = false;
-  player_cards = [];
-  dealer_cards = [];
-  player_hand = 0;
-  dealer_hand = 0;
-  game_deck.resetcards();
-  game_deck.shufflecards();
-  num_hits = 2;
-  num_hits_dealer = 2;
-  pot = 0;
-  var n = 0;
-  var m = 0;
-  blackjack = false;
-  const playerCards = document.querySelectorAll(".player_card");
-  playerCards.forEach((card) => {
-    n++;
-    card.style.backgroundImage = "url(../assets/cardBackBlue.png)";
-    card.classList.remove("flip");
-    card.style.backgroundSize = "110% 110%";
-    if (n > 2) {
-      card.parentNode.removeChild(card);
-    }
-  });
-  const dealerCards = document.querySelectorAll(".dealer_card");
-  dealerCards.forEach((card) => {
-    m++;
-    card.classList.remove("flip");
-    card.style.backgroundImage = "url(../assets/cardBackRed.png)";
-    card.style.backgroundSize = "110% 110%";
-    if (m > 2) {
-      card.parentNode.removeChild(card);
-    }
-  });
-  document.querySelector(".betting_container").classList.remove("remove");
-  document.querySelector(".winner").innerHTML = "Winner:";
-  document.querySelector(".hit_btn").disabled = false;
-  document.querySelector(".play_again_btn").style.visibility = "hidden";
+  if (stack > 0) {
+    player_aces = 0;
+    dealer_aces = 0;
+    bet_input.disabled = false;
+    bet_input.value = "";
+    done_deal = false;
+    done_stand = false;
+    done_bet = false;
+    player_cards = [];
+    dealer_cards = [];
+    player_hand = 0;
+    dealer_hand = 0;
+    game_deck.resetcards();
+    game_deck.shufflecards();
+    num_hits = 2;
+    num_hits_dealer = 2;
+    pot = 0;
+    var n = 0;
+    var m = 0;
+    blackjack = false;
+    const playerCards = document.querySelectorAll(".player_card");
+    playerCards.forEach((card) => {
+      n++;
+      card.style.backgroundImage = "url(../assets/cardBackBlue.png)";
+      card.classList.remove("flip");
+      card.style.backgroundSize = "110% 110%";
+      if (n > 2) {
+        card.parentNode.removeChild(card);
+      }
+    });
+    const dealerCards = document.querySelectorAll(".dealer_card");
+    dealerCards.forEach((card) => {
+      m++;
+      card.classList.remove("flip");
+      card.style.backgroundImage = "url(../assets/cardBackRed.png)";
+      card.style.backgroundSize = "110% 110%";
+      if (m > 2) {
+        card.parentNode.removeChild(card);
+      }
+    });
+    document.querySelector(".betting_container").classList.remove("remove");
+    document.querySelector(".winner").innerHTML = "Winner:";
+    document.querySelector(".hit_btn").disabled = false;
+    document.querySelector(".play_again_btn").style.visibility = "hidden";
+  }
 }
 
 //betting
