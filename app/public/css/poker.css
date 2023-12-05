@@ -397,6 +397,7 @@ a {
 
 /* testing */
 .testing_container {
+    visibility: hidden;
     position: absolute;
     right: 0px;
     top: 10%;
