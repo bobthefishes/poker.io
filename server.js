@@ -112,9 +112,16 @@ io.on("connection", (socket) => {
             }
         }
         socket.on("disconnect", ()=>{
+          try{
             storedUID[UID].disconnecttimer = setTimeout(() => {
                 delete storedUID[UID];
             }, 10000);
+          }
+          catch(error){
+            console.log(storedUID);
+            console.log(UID);
+            console.log(error);
+          }
         });
         if (accountbyUID[UID]){
             socket.emit("logged in");
@@ -135,7 +142,7 @@ loadaccounts();
 }catch{}
 
 
-/*Basic app */
+/*Basic app */     
 app.use(express.static(path.join(__dirname, 'app', 'public')));
 function sendhtml(req,res,file){
     let file_path = path.join(__dirname,"app",`${file}`)
