@@ -148,7 +148,7 @@ a {
 html {
     --font_colour: rgb(42, 42, 44);
     --body_colour: rgb(10, 10, 20);
-    --menu_colour: rgb(255, 255, 255);
+    --menu_colour: rgb(245, 245, 255);
     --menu_item_hover_colour: rgb(125, 125, 125);
     --menu_item_spacing: 15px;
     --title_colour: #5E5DF0;

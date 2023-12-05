@@ -13,3 +13,4 @@ function theme_change() {
         css_link.href = "";
     };
 }
+

@@ -248,20 +248,7 @@ function hit() {
       document.querySelector(".hit_btn").disabled = true;
       stand();
     }
-    else if (player_hand > 21 && player_aces > 0) {
-      for (let i=0; i<player_aces; i++) {
-        player_hand = player_hand - 10;
-        if (player_hand <= 21) {
-          document.querySelector(".hit_btn").disabled = true;
-          stand();
-          break;
-        }
-      }
-      if (player_hand > 21) {
-        document.querySelector(".hit_btn").disabled = true;
-        stand();
-      }
-    }
+     while
     console.log(`player hand: ${player_hand}`)
   }
 }
