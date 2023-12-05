@@ -169,6 +169,7 @@ let bet;
 let stack = 5000;
 let done_stand = false;
 let blackjack = false;
+let blah = false;
 window.onload = function () {
   document.querySelector(".stack").innerHTML = `Your stack: £${stack}`;
 }
@@ -245,7 +246,7 @@ function hit() {
       stand();
     }
     while (player_hand > 21 && player_aces > 0) {
-      player_hand -= 1;
+      player_hand -= 10;
       player_aces -= 1;
     }
     if (player_hand >= 21) {
@@ -258,16 +259,22 @@ function hit() {
 }
 
 function dealer_hit() {
-  while (dealer_hand<17 && player_hand<=21) {
-    num_hits_dealer++;
-    const newCard = document.createElement('div')
-    document.querySelector('.dealer_cards').appendChild(newCard);
-    newCard.classList.add('card');
-    newCard.classList.add('dealer_card');
-    newCard.classList.add(`card${num_hits_dealer}`);
-    turn_over_dealerCard(newCard);
-    console.log(`dealer hand: ${dealer_hand}`)
-  };
+  while (!blah) {
+    while (dealer_hand<17 && player_hand<=21) {
+      num_hits_dealer++;
+      const newCard = document.createElement('div')
+      document.querySelector('.dealer_cards').appendChild(newCard);
+      newCard.classList.add('card');
+      newCard.classList.add('dealer_card');
+      newCard.classList.add(`card${num_hits_dealer}`);
+      turn_over_dealerCard(newCard);
+      console.log(`dealer hand: ${dealer_hand}`)
+    };
+    while (dealer_hand>21 && dealer_aces>0) {
+      dealer_hand -= 10;
+      dealer_aces -= 1;
+    }
+  }
   dealer_stand()
 }
 
