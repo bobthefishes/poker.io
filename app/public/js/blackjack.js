@@ -244,11 +244,15 @@ function hit() {
       document.querySelector(".hit_btn").disabled = true;
       stand();
     }
-    else if (player_hand > 21 && player_aces === 0) {
+    while (player_hand > 21 && player_aces > 0) {
+      player_hand -= 1;
+      player_aces -= 1;
+    }
+    if (player_hand >= 21) {
       document.querySelector(".hit_btn").disabled = true;
       stand();
     }
-     while
+      
     console.log(`player hand: ${player_hand}`)
   }
 }
