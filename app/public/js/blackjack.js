@@ -137,7 +137,6 @@ function go_again() {
   var n = 0;
   var m = 0;
   blackjack = false;
-  bust = false;
   const playerCards = document.querySelectorAll(".player_card");
   playerCards.forEach(card => {
     n++;
@@ -276,6 +275,16 @@ function dealer_hit() {
     }
   }
   dealer_stand()
+}
+
+function double() {
+  if (num_hits === 2) {
+    done_double = true;
+    pot = pot*2;
+    stack = stack - pot;
+    hit();
+    stand();
+  }
 }
 
 //winner
