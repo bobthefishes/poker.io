@@ -352,6 +352,24 @@ a {
     background-color: red;
   }
 }
+.double_btn {
+  position: absolute;
+  border-radius: 999px;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 1px white;
+  padding: 8px 18px;
+  margin: 5px;
+  transition: transform 0.2s ease;
+  position: absolute;
+  bottom: 25%;
+  right: 6%;
+  margin: 2%;
+  transform: scale(1.3);
+  &:hover {
+    transform: scale(1.4);
+    background-color: #5e5df0;
+  }
+}
 
 /* testing */
 .testing_container {

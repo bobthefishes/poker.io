@@ -161,6 +161,7 @@ function go_again() {
   document.querySelector(".winner").innerHTML = 'Winner:';
   document.querySelector(".hit_btn").disabled = false;
   document.querySelector(".play_again_btn").style.visibility = 'hidden';
+  document.querySelector(".double_btn").style.visibility = 'visible';
 }
 
 //betting
@@ -195,7 +196,7 @@ function make_bet() {
 }
 
 function dealer_stand() {
-  winner = get_winner(player_hand, dealer_hand);
+  const winner = get_winner(player_hand, dealer_hand);
   document.querySelector(".winner").innerHTML = `Winner: ${winner}`;
   if (winner === 'player' && blackjack===false) {
     stack = stack + 2*pot;
@@ -233,6 +234,7 @@ let num_hits_dealer = 2;
 
 function hit() {
   if (done_deal) {
+    document.querySelector('.double_btn').style.visibility = 'hidden';
     num_hits++;
     const newCard = document.createElement('div')
     document.querySelector('.player_cards').appendChild(newCard);
@@ -278,8 +280,7 @@ function dealer_hit() {
 }
 
 function double() {
-  if (num_hits === 2) {
-    done_double = true;
+  if (num_hits === 2 && done_deal) {
     pot = pot*2;
     stack = stack - pot;
     hit();
