@@ -215,17 +215,23 @@ function dealer_stand() {
 
 function stand() {
   if (!done_stand && done_deal) {
+    console.log('weewoo')
     dealer_card();
+    console.log('weewoo')
     done_stand = true;
     if (player_hand <= 21) {
       dealer_hit();
+      console.log('weewoo')
     }
     else {
       dealer_stand()
+      console.log('weewoo')
     };
     hide_stuff();
-  }
+    console.log('weewoo')
     document.querySelector(".hit_btn").disabled = true;
+    console.log('weewoo')
+  }
 }
 
 

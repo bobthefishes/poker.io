@@ -346,7 +346,7 @@ function return_winner() {
     }
     else {
         console.log("Split")
-      stack = stack + potsize;
+        stack = stack + potsize;
     }
 }
 socket.on("joined room", (room, account) => {
