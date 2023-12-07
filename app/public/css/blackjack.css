@@ -362,7 +362,7 @@ a {
   transition: transform 0.2s ease;
   position: absolute;
   bottom: 25%;
-  right: 6%;
+  right: 100px;
   margin: 2%;
   transform: scale(1.3);
   &:hover {
