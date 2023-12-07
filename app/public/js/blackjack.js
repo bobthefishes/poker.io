@@ -134,7 +134,6 @@ function go_again() {
   num_hits = 2;
   num_hits_dealer = 2;
   pot = 0;
-  blah = false;
   var n = 0;
   var m = 0;
   blackjack = false;
@@ -218,17 +217,18 @@ function stand() {
     console.log('weewoo1')
     dealer_card();
     console.log('weewoo2')
-    //done_stand = true;
+    done_stand = true;
     if (player_hand <= 21) {
+      console.log("yeah")
       dealer_hit();
       console.log('weewoo3')
     }
     else {
       dealer_stand()
       console.log('weewoo4')
-    };
-    hide_stuff();
+    }
     console.log('weewoo5')
+    hide_stuff();
     document.querySelector(".hit_btn").disabled = true;
     console.log('weewoo6')
   }
@@ -265,8 +265,8 @@ function hit() {
   }
 }
 
-let blah = false;
 function dealer_hit() {
+  let blah = false;
   while (!blah) {
     while (dealer_hand<17 && player_hand<=21) {
       console.log('1')
