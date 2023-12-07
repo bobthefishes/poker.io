@@ -268,6 +268,7 @@ function hit() {
 function dealer_hit() {
   let blah = false;
   while (!blah) {
+    console.log("hello");
     while (dealer_hand<17 && player_hand<=21) {
       console.log('1')
       num_hits_dealer++;
@@ -279,12 +280,14 @@ function dealer_hit() {
       turn_over_dealerCard(newCard);
       console.log('2')
       console.log(`dealer hand: ${dealer_hand}`)
-    };
+    }
     while (dealer_hand>21 && dealer_aces>0) {
+      consolwe.log("meow")
       dealer_hand -= 10;
       dealer_aces -= 1;
     }
-    if (dealer_hand<=17) {
+    if (dealer_hand>=17) {
+      console.log("oiiii")
       dealer_stand()
       blah = true;
       console.log('3')
