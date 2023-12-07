@@ -134,6 +134,7 @@ function go_again() {
   num_hits = 2;
   num_hits_dealer = 2;
   pot = 0;
+  blah = false;
   var n = 0;
   var m = 0;
   blackjack = false;
@@ -169,7 +170,6 @@ let bet;
 let stack = 5000;
 let done_stand = false;
 let blackjack = false;
-let blah = false;
 window.onload = function () {
   document.querySelector(".stack").innerHTML = `Your stack: £${stack}`;
 }
@@ -215,22 +215,22 @@ function dealer_stand() {
 
 function stand() {
   if (!done_stand && done_deal) {
-    console.log('weewoo')
+    console.log('weewoo1')
     dealer_card();
-    console.log('weewoo')
-    done_stand = true;
+    console.log('weewoo2')
+    //done_stand = true;
     if (player_hand <= 21) {
       dealer_hit();
-      console.log('weewoo')
+      console.log('weewoo3')
     }
     else {
       dealer_stand()
-      console.log('weewoo')
+      console.log('weewoo4')
     };
     hide_stuff();
-    console.log('weewoo')
+    console.log('weewoo5')
     document.querySelector(".hit_btn").disabled = true;
-    console.log('weewoo')
+    console.log('weewoo6')
   }
 }
 
@@ -265,24 +265,31 @@ function hit() {
   }
 }
 
+let blah = false;
 function dealer_hit() {
-  while (dealer_hand<17 && player_hand<=21) {
-    console.log('2')
-    num_hits_dealer++;
-    const newCard = document.createElement('div')
-    document.querySelector('.dealer_cards').appendChild(newCard);
-    newCard.classList.add('card');
-    newCard.classList.add('dealer_card');
-    newCard.classList.add(`card${num_hits_dealer}`);
-    turn_over_dealerCard(newCard);
-    console.log('3')
-    console.log(`dealer hand: ${dealer_hand}`)
-  };
-  while (dealer_hand>21 && dealer_aces>0) {
-    dealer_hand -= 10;
-    dealer_aces -= 1;
+  while (!blah) {
+    while (dealer_hand<17 && player_hand<=21) {
+      console.log('1')
+      num_hits_dealer++;
+      const newCard = document.createElement('div')
+      document.querySelector('.dealer_cards').appendChild(newCard);
+      newCard.classList.add('card');
+      newCard.classList.add('dealer_card');
+      newCard.classList.add(`card${num_hits_dealer}`);
+      turn_over_dealerCard(newCard);
+      console.log('2')
+      console.log(`dealer hand: ${dealer_hand}`)
+    };
+    while (dealer_hand>21 && dealer_aces>0) {
+      dealer_hand -= 10;
+      dealer_aces -= 1;
+    }
+    if (dealer_hand<=17) {
+      dealer_stand()
+      blah = true;
+      console.log('3')
+    }
   }
-  dealer_stand()
 }
 
 function double() {
