@@ -266,21 +266,21 @@ function hit() {
 }
 
 function dealer_hit() {
-  while (!blah) {
-    while (dealer_hand<17 && player_hand<=21) {
-      num_hits_dealer++;
-      const newCard = document.createElement('div')
-      document.querySelector('.dealer_cards').appendChild(newCard);
-      newCard.classList.add('card');
-      newCard.classList.add('dealer_card');
-      newCard.classList.add(`card${num_hits_dealer}`);
-      turn_over_dealerCard(newCard);
-      console.log(`dealer hand: ${dealer_hand}`)
-    };
-    while (dealer_hand>21 && dealer_aces>0) {
-      dealer_hand -= 10;
-      dealer_aces -= 1;
-    }
+  while (dealer_hand<17 && player_hand<=21) {
+    console.log('2')
+    num_hits_dealer++;
+    const newCard = document.createElement('div')
+    document.querySelector('.dealer_cards').appendChild(newCard);
+    newCard.classList.add('card');
+    newCard.classList.add('dealer_card');
+    newCard.classList.add(`card${num_hits_dealer}`);
+    turn_over_dealerCard(newCard);
+    console.log('3')
+    console.log(`dealer hand: ${dealer_hand}`)
+  };
+  while (dealer_hand>21 && dealer_aces>0) {
+    dealer_hand -= 10;
+    dealer_aces -= 1;
   }
   dealer_stand()
 }
