@@ -55,10 +55,14 @@ function turn_over_playerCard(card) {
   card.style.backgroundImage = `url('../assets/newDeck/${next_card[1]}/card${next_card[1]}_${next_card[0]}.png')`;
   card.style.backgroundSize = '100% 109%';
   if (next_card[0] === 11 || next_card[0] === 12 || next_card[0] === 13) { value = 10 }
-  else if (next_card[0] === 14) { value = 11 }
+  else if (next_card[0] === 14) {
+    value = 11;
+    player_aces++;
+  }
   else { value = parseInt(next_card[0]) };
   player_hand = player_hand + value;
 }
+
 function turn_over_dealerCard(card) {
   var value = 0;
   card.classList.add("flip");
@@ -200,37 +204,33 @@ function dealer_stand() {
   if (winner === 'player' && blackjack===false) {
     stack = stack + 2*pot;
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
+    showNotification(`You win £${2*pot}!`)
   }
   else if (winner==='player' && blackjack===true) {
     stack = stack + 1.5*(2*pot);
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
+    showNotification(`You win £${1.5*(2*pot)}!`)
   }
   else if (winner === 'push') {
     stack = stack + pot;
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
+    showNotification("It's a draw.")
   }
+  else { showNotification('Oops...') }
   hide_stuff();
 }
 
 function stand() {
   if (!done_stand && done_deal) {
-    console.log('weewoo1')
-    dealer_card();
-    console.log('weewoo2')
-    done_stand = true;
+    dealer_card();    done_stand = true;
     if (player_hand <= 21) {
-      console.log("yeah")
       dealer_hit();
-      console.log('weewoo3')
     }
     else {
       dealer_stand()
-      console.log('weewoo4')
     }
-    console.log('weewoo5')
     hide_stuff();
     document.querySelector(".hit_btn").disabled = true;
-    console.log('weewoo6')
   }
 }
 
@@ -253,8 +253,10 @@ function hit() {
       stand();
     }
     while (player_hand > 21 && player_aces > 0) {
-      player_hand -= 10;
-      player_aces -= 1;
+      console.log('accounting for player aces', player_aces)
+      player_hand  = player_hand - 10;
+      player_aces = player_aces - 1;
+      console.log(player_hand)
     }
     if (player_hand >= 21) {
       document.querySelector(".hit_btn").disabled = true;
@@ -268,9 +270,7 @@ function hit() {
 function dealer_hit() {
   let blah = false;
   while (!blah) {
-    console.log("hello");
     while (dealer_hand<17 && player_hand<=21) {
-      console.log('1')
       num_hits_dealer++;
       const newCard = document.createElement('div')
       document.querySelector('.dealer_cards').appendChild(newCard);
@@ -278,30 +278,44 @@ function dealer_hit() {
       newCard.classList.add('dealer_card');
       newCard.classList.add(`card${num_hits_dealer}`);
       turn_over_dealerCard(newCard);
-      console.log('2')
       console.log(`dealer hand: ${dealer_hand}`)
     }
     while (dealer_hand>21 && dealer_aces>0) {
-      consolwe.log("meow")
+      console.log('accounting for dealer aces', dealer_aces)
       dealer_hand -= 10;
       dealer_aces -= 1;
+      console.log(dealer_hand);
     }
-    if (dealer_hand>=17) {
-      console.log("oiiii")
+    if (dealer_hand>17) {
       dealer_stand()
       blah = true;
-      console.log('3')
+    }
+    else if (dealer_hand===17 && dealer_aces===0) {
+      dealer_stand()
+      blah = true;
     }
   }
 }
 
 function double() {
   if (num_hits === 2 && done_deal) {
-    pot = pot*2;
+    console.log('doubled!');
     stack = stack - pot;
+    document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
+    pot = pot*2;
     hit();
     stand();
   }
+}
+
+function showNotification(text) {
+  var notification = document.getElementById('notification');
+  notification.innerHTML = text;
+  notification.style.display = 'block';
+
+  setTimeout(function() {
+    notification.style.display = 'none';
+  }, 3000);
 }
 
 //winner
