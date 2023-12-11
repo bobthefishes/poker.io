@@ -234,6 +234,12 @@ function stand() {
   }
 }
 
+function split() {
+  if (num_hits === 2 && player_cards[0]===player_cards[1]) {
+    document.getElementById('playerCard2').style.left = '500px';
+  }
+}
+
 
 let num_hits = 2;
 let num_hits_dealer = 2;

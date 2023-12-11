@@ -12,6 +12,10 @@ body {
   background-blend-mode: luminosity;
 }
 
+.split_btn {
+  visibility: hidden;
+}
+
 .menu_bar {
   height: 6.4%;
   width: 100%;
