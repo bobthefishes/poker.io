@@ -80,7 +80,7 @@ window.addEventListener('resize', updateWheelSize);
 
 let total_r = 0;
 
-async function spinWheel() {
+function spinWheel() {
   let total_bet = 0;
   let bets = [];
   bet_inputs.forEach(x => {
@@ -100,18 +100,19 @@ async function spinWheel() {
     find_slot(total_r);
 
     stack -= total_bet;
+
     //wait 4s so the stack updates after the spin, not before the spin finishes.
     if (outcome['number']%2 === 0) {
       stack += parseInt(bets[2]) * 2;
     } else {
       stack += parseInt(bets[3]) * 2;
-    }
-
+    };
     if (outcome['color'] === 'red') {
       stack += parseInt(bets[0]) * 2;
-    } else {
+    } else if (outcome['color'] === 'black') {
       stack += parseInt(bets[1]) * 2;
-    }
+    };
+
     document.querySelector('.stack').innerHTML = `Your stack: ${stack}`;
     change_max_bets();
   } else {
@@ -124,12 +125,19 @@ function change_max_bets() {
   bet_inputs.forEach(x => {
     x.max = `${max_bet}`;
     x.min = '0';
-    
+    if (stack === 0) {
+      const spin_btn = document.querySelector('.spin_btn');
+      spin_btn.disabled = true;
+      spin_btn.innerHTML = 'Your stack is empty...';
+      spin_btn.style.backgroundColor = 'red';
+      spin_btn.style.boxShadow = 'none';
+      spin_btn.style.color = 'white';
+    }
   })
   show_value('red'); show_value('black'); show_value('even'); show_value('odd');
 }
 
-let degrees_per_segment = 9.72972972972972972972972972972972972973;
+let degrees_per_segment = 9.72972972972972972972972972972972972972972972972972972973;
 let slots = [
   { number: 0, color: 'green', index: 0 },
   { number: 32, color: 'red', index: 1 },
@@ -177,7 +185,7 @@ function find_slot(deg) {
   var index = deg / degrees_per_segment;
   index = Math.round(index);
   console.log(index);
-  if (0 < index < 36) {
+  if (index!=0 && index!=36) {
     index = 37 - index;
   }
   outcome = slots[index];
