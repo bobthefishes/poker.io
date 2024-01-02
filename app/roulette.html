@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette</title>
+    <link rel="icon" href="public/assets/favicon.png">
+    <link rel="stylesheet" href="public/css/roulette.css">
+</head>
+<body>
+    <div class="menu_bar">
+        <div class="menu_link">
+            <a href="home">HOME</a>
+        </div>
+        <div class="menu_link">
+            <a href="leaderboard">LEADERBOARDS</a>
+        </div>
+        <div class="title_section">
+            <a href="poker">
+                <h1 class="title">POKER.</h1>
+            </a>
+        </div>
+        <div class="menu_link">
+            <a class="user_login" href="login">LOG IN</a>
+        </div>
+        <div class="menu_link">
+            <a>ACCOUNT</a>
+        </div>
+    <h1 class="roulette_title">~ROULETTE~</h1>
+    <div id="notification" class="notification"></div>
+    <h1 class="stack"></h1>
+    <div class="pointer">▼</div>
+    <div class="roulette_wheel">
+        <img class="wheel" src="public/assets/roulette-wheel-3.jpg"></img>
+    </div>
+    <div class="betting_container">
+        <div class="red">
+            <h2>RED:</h2>
+            <p class="betting_amount" id="betting_amount_red"></p>
+            <input type="range" class="bet_input" id="bet_input_red" max="2500" step="5" min="0" oninput="show_value('red'); change_max_bets()">
+        </div>
+        <div class="black">
+            <h2>BLACK:</h2>
+            <p class="betting_amount" id="betting_amount_black"></p>
+            <input type="range" class="bet_input" id="bet_input_black" max="2500" step="5" min="0" oninput="show_value('black'); change_max_bets()">
+        </div>
+        <div class="even">
+            <h2>EVEN:</h2>
+            <p class="betting_amount" id="betting_amount_even"></p>
+            <input type="range" class="bet_input" id="bet_input_even" max="2500" step="5" min="0" oninput="show_value('even'); change_max_bets()">
+        </div>
+        <div class="odd">
+            <h2>ODD:</h2>
+            <p class="betting_amount" id="betting_amount_odd"></p>
+            <input type="range" class="bet_input" id="bet_input_odd" max="2500" step="5" min="0" oninput="show_value('odd'); change_max_bets()">
+        </div>
+        <button class="spin_btn button" onclick="spinWheel()">SPIN</button>
+    </div>
+    <script src="public/js/roulette.js"></script>
+</body>
+</html>

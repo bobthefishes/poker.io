@@ -1,0 +1,203 @@
+body {
+  overflow-y: auto;
+  height: 99vh;
+  margin: 0px;
+  color: white;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  background-position: center, center;
+  background-size: 250px;
+  background-repeat: no-repeat;
+  background-color: var(--body_colour);
+  background-blend-mode: luminosity;
+}
+
+.menu_bar {
+  z-index: 10;
+  height: 60px;
+  width: 100%;
+  margin: 0%;
+  margin-top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--menu_colour);
+  font-weight: 700;
+  border-radius: 0px 0px 15px 15px;
+  /*box-shadow: #1f1f1f 0 10px 10px -10px;*/
+  box-shadow: #5e5df0 0 10px 20px -10px;
+  z-index: 10;
+}
+
+.menu_link {
+  width: 5%;
+  text-align: center;
+  padding: 0.5%;
+  border-radius: 25px;
+  transition: transform 0.2s;
+
+  &:hover {
+    /*background-color: var(--menu_item_hover_colour);*/
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+a {
+  text-decoration: none;
+  color: var(--font_colour);
+}
+
+.title {
+  /*border: solid var(--title_border_colour) 2px;*/
+  border-radius: 15px;
+  /*background-color: var(--title_colour);*/
+  box-shadow: #ffffff 0 3px 17px -10px;
+  transition: transform 0.2s ease;
+  padding: 0px 35px;
+
+  &:hover {
+    color: var(--title_colour);
+    cursor: pointer;
+    transform: scale(1.3);
+  }
+}
+
+.roulette_title {
+  position: absolute;
+  left: 2%;
+  top: 60px;
+  margin-top: 5px;
+}
+
+.stack {
+  position: absolute;
+  top: 70px;
+  left: 42%;
+  margin-bottom: 2%;
+  text-decoration: overline red;
+}
+
+.pointer {
+  position: absolute;
+  top: 20%;
+  left: 15%;
+}
+.roulette_wheel {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border: 2px solid white;
+  border-radius: 100%;
+  overflow: hidden;
+  left: 7.5%;
+  top: 150px;
+  align-items: center;
+  justify-content: space-around;
+  background-position: center center;
+  box-shadow: #5e5df0 0 10px 20px -10px;
+}
+.wheel {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  transform-origin: 50% 50%;
+  transition: transform 4s ease-out;
+}
+
+.notification {
+  display: none;
+  position: fixed;
+  top: 10%;
+  right: 2%;
+  padding: 15px;
+  background-color: rgba(143, 239, 134, 0.736);
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeInOut 3s ease-in-out;
+}
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.bet_input {
+  width: 100%;
+  background-color: red;
+}
+.betting_container {
+  background-color: var(--betting_background_colour);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 20%;
+  top: 210px;
+  height: 550px;
+  width: 350px;
+  padding: 1%;
+  border-radius: 20px 20px 20px 20px;
+  margin: 2%;
+  margin-right: 0;
+  box-shadow: rgba(174, 229, 255, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.5) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  justify-content: space-evenly;
+  z-index: 0;
+}
+
+.button {
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 90%;
+  line-height: 24px;
+  outline: 0 solid transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0px;
+  transition: transform 0.2s ease;
+  margin: 1%;
+}
+
+.spin_btn {
+  background: #6ef05d;
+  border-radius: 999px;
+  box-shadow: #6ef05d 0 10px 20px -10px;
+  padding: 8px 18px;
+  margin: 5px;
+  transition: transform 0.2s ease;
+  bottom: 3px;
+  margin-left: 20%;
+  width: 60%;
+  margin-top: 20px;
+  &:hover {
+      background-color: white;
+      color: #8df184;
+      transform: scale(1.1);
+  }
+}
+
+html {
+  --font_colour: rgb(42, 42, 44);
+  /*--body_colour: rgb(24, 83, 54);*/
+  --body_colour: rgb(10, 10, 20);
+  --menu_colour: rgb(245, 245, 255);
+  --menu_item_hover_colour: rgb(125, 125, 125);
+  --title_colour: #5e5df0;
+  --title_border_colour: white;
+  --betting_background_colour: rgba(42, 152, 164, 0.6);
+}

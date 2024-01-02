@@ -234,9 +234,15 @@ function stand() {
   }
 }
 
+let hand;
 function split() {
-  if (num_hits === 2 && player_cards[0]===player_cards[1]) {
-    document.getElementById('playerCard2').style.left = '500px';
+  if (/*num_hits === 2 && player_cards[0]===player_cards[1]*/ true) {
+    hand = 'hand1';
+    document.getElementById('playerCard2').style.visibility = 'hidden';
+    showNotification('Hand 1...');
+    document.getElementById('playerCard1').classList.add('hand1');
+    document.getElementById('playerCard2').classList.add('hand2');
+    
   }
 }
 
