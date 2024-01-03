@@ -102,8 +102,8 @@ body {
 
 .menu_bar {
     height: 6.4%;
-    width: 100%;
-    margin: 0%;
+    width: 98%;
+    margin: 1%;
     margin-top: 0;
     display: flex;
     flex-direction: row;
@@ -166,7 +166,7 @@ a {
     max-width: 710px;
 }
 
-.playerA_cards {
+.player_cards {
     background-color: var(--player_cards_background_colour);
     /*border: solid rgb(93, 125, 190) 5px;*/
     box-shadow: #5E5DF0 0 15px 20px -10px;
@@ -183,7 +183,7 @@ a {
     max-width: 420px;
 }
 
-.playerA_card {
+.player_card {
     height: var(--player_card_height);
     width: var(--player_card_width);
     max-width: 150px;
@@ -204,7 +204,7 @@ a {
     }
 }
 
-.playerB_cards {
+.opponent_cards {
     display: flex;
     margin: 1rem;
     height: 19.5%;
@@ -213,7 +213,7 @@ a {
     align-items: center;
     z-index: 2;
 }
-.playerB_card {
+.opponent_card {
     height: var(--opp_card_height);
     width: var(--opp_card_width);
     max-width: 100px;
@@ -261,6 +261,7 @@ a {
     background-image: url(../assets/deck.png);
     background-size: 110% 110%;
 }
+
 @keyframes flip {
     0% {
         transform: rotateY(0deg);
@@ -282,7 +283,7 @@ a {
     box-sizing: border-box;
     color: #FFFFFF;
     cursor: pointer;
-    font-size: 90%;
+    font-size: 100%;
     line-height: 24px;
     outline: 0 solid transparent;
     user-select: none;
@@ -397,7 +398,6 @@ a {
 
 /* testing */
 .testing_container {
-    visibility: hidden;
     position: absolute;
     right: 0px;
     top: 10%;

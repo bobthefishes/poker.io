@@ -210,3 +210,4 @@ function make_deck(player_cards, community_cards) {
     deck.sort(function (a, b) { return a[0] - b[0] });
     return deck
 }
+module.exports = {handvalue,make_deck,is_flush}

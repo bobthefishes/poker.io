@@ -11,15 +11,14 @@
 
 <body>
     <div class="menu_bar">
-        <div class="menu_bar">
         <div class="menu_link">
-            <a href="home">HOME</a>
+            <a href="home">HOME</a> <!--move from <a> to <p>, switch onclick() to <div>-->
         </div>
         <div class="menu_link">
-            <a href="leaderboard">LEADERBOARDS</a>
+            <a href="contactpage">CONTACT</a>
         </div>
         <div class="title_section">
-            <a href="poker">
+            <a href="play">
                 <h1 class="title">POKER.</h1>
             </a>
         </div>
@@ -30,11 +29,22 @@
             <a>ACCOUNT</a>
         </div>
     </div>
-    </div>
     <div class="opponents_section">
-        <div class="playerB_cards">
-            <div class="card playerB_card"></div>
-            <div class="card playerB_card"></div>
+        <div class="playerA_cards opponent_cards">
+            <div class="card opponent_card playerA_card"></div>
+            <div class="card opponent_card playerA_card"></div>
+        </div>
+        <div class="playerB_cards opponent_cards">
+            <div class="card opponent_card playerB_card"></div>
+            <div class="card opponent_card playerB_card"></div>
+        </div>
+        <div class="playerC_cards opponent_cards">
+            <div class="card opponent_card playerC_card"></div>
+            <div class="card opponent_card playerC_card"></div>
+        </div>
+        <div class="playerD_cards opponent_cards">
+            <div class="card opponent_card playerD_card"></div>
+            <div class="card opponent_card playerD_card"></div>
         </div>
     </div>
     <div class="community_cards">
@@ -44,16 +54,18 @@
         <div class="card turn community_card"></div>
         <div class="card river community_card"></div>
     </div>
-    <div class="playerA_cards">
-        <div class="card playerA_card" onclick="playerA_card()"></div>
-        <div class="card playerA_card" onclick="playerA_card()"></div>
+    <div class="player_cards">
+        <div class="card player_card"></div>
+        <div class="card player_card"></div>
     </div>
     <button onclick="fold()" class="fold_btn button">Fold</button>
     <div>
         <div class="testing_container">
             <p>Testing stuff</p>
-            <p id="hand_strength_A">Player A hand strength: </p>
-            <p id="hand_strength_B">Player B hand strength: </p>
+            <p class="playeractionA">PlayerA</p>
+            <p class="playeractionB">PlayerB</p>
+            <p class="playeractionC">PlayerC</p>
+            <p class="playeractionD">PlayerD</p>
             <p class="winner">Winner:</p>
         </div>
         <div class="pot_container">
@@ -65,9 +77,9 @@
             <p class="betting_amount betting_text">Your bet is: £</p>
             <div>
                 <input type="range" class="bet_input" id="bet_input" max="2500" step="5" min="0" oninput="show_value()">
-                <button class="confirm_bet_btn button" onclick="add_to_pot()">Confirm Bet</button>
+                <button class="confirm_bet_btn button" onclick="setbet()">Confirm Bet</button>
                 <button class="play_again_btn button" onclick="play_again()">Play Again</button>
-                <button class="all_in_btn button" onclick="all_in()">ALL-IN</button>
+                <button class="all_in_btn button" onclick="all_in()">ALL IN</button>
                 <p class="stack betting_text"></p>
             </div>
         </div>
@@ -87,8 +99,6 @@
     <script>
         const socket = io();
     </script>
-    <script src="js/hands.js"></script>
-    <script src="js/winner.js"></script>
     <script src="js/poker.js"></script>
     <script src="js/app.js"></script>
 </body>
