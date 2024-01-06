@@ -101,24 +101,25 @@ function playerfold(player,room_instance){
     room_instance.bettingplayers.splice(room_instance.bettingplayers.indexOf(player),1);
 }
 function playerbet(player,betamount,callamount,room_instance){
+    console.log(betamount,callamount);
     if (betamount >= callamount){
         if (betamount === 0){
             player.go = ["check",0];
         }
-        else if (betamount === callamount){
-            player.go = ["call", betamount];
-        } 
         else if (betamount === player.stack){
             player.go = ["allin",betamount];
             room_instance.activeplayers.splice(room_instance.activeplayers.indexOf(player),1);
         }
+        else if (betamount === callamount){
+            player.go = ["call", betamount];
+        } 
         else{
             player.go = ["raise",betamount];
         }
         player.stack -= betamount;
         player.room_instance.potsize += betamount;
     }
-    else if (callamount >= player.stack){
+    else if (callamount > player.stack){
         player.go = ["allin",callamount,player.stack];
         player.stack -= betamount;
         room_instance.potsize += betamount;
@@ -152,18 +153,18 @@ async function playersgo(io,room_instance){
         player.go = ["reset",0];
         player.roundbetamount = 0;
     });
-    //console.log("New round");
+    console.log("New round");
     while (!roundfinished){
-        /*
         console.log("\n\n\n\n");
         console.log("_________________");
         room_instance.bettingplayers.forEach((player)=>{
             console.log(player.letter);
         });
         console.log(index);
-        */
+        console.log(room_instance.activeplayers.length);
         if (room_instance.bettingplayers.length !== 1 && room_instance.activeplayers.length > 0){
             const player = room_instance.activeplayers[index];
+            console.log("Playerletter:",player.letter);
             let actualcallamount = (room_instance.bettingplayers.indexOf(player)>0)?
             room_instance.bettingplayers[room_instance.bettingplayers.indexOf(player)-1].roundbetamount - 
             player.roundbetamount: room_instance.bettingplayers[room_instance.bettingplayers.length-1].roundbetamount-player.roundbetamount;
@@ -177,6 +178,11 @@ async function playersgo(io,room_instance){
                 }
                 player.socket.emit("decision valid");
                 io.to(room_instance.roomID).emit("show player decision", player.letter, player.go,player.uname,room_instance.potsize);
+                room_instance.bettingplayers.forEach((player)=>{
+                    console.log(player.letter);
+                });
+                console.log(index);
+                console.log(room_instance.activeplayers.length);
                 if (playeraction[0] === "fold" || playeraction[0] === "allin"){
                     if(index === room_instance.activeplayers.length){index = 0};
                     continue;
@@ -214,11 +220,9 @@ function winner(io,room_instance){
          bettingcards[player.letter] = player.player_cards;
     });
         winningplayers = winnerdecoder.multiplayerwinner(bettingcards,room_instance.community_cards);
-    }
-    else{
+    }else{
         winningplayers[0] = room_instance.bettingplayers[0].letter
     };
-    console.log(winningplayers);
     const sharedpot = (room_instance.potsize / winningplayers.length).toFixed(0);
     winningplayers.forEach((letter) =>{
         room_instance.playerbyletter[letter].stack += sharedpot;
@@ -246,7 +250,6 @@ async function game_round(io,room_instance){
     await playersgo(io,room_instance);
     showcards(io,room_instance);
     winner(io,room_instance);
-    //add a bypass for when only one player remains
 }
 
 module.exports = {
