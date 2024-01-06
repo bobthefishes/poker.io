@@ -120,8 +120,9 @@ io.on("connection", (socket) => {
     socket.on("ReturnUID", UID =>{
         setTimeout(async() => {
         UID = await UIDsetup(socket,UID);
-        if (accountbyUID[UID]){socket.emit("logged in")};
+        if (accountbyUID[UID]){socket.emit("logged in")}else{
         socket.emit("check location", accountbyUID,UID);
+        }
         socket.on("create room", () => {create_room(socket, UID)});
         socket.on("join room", (room) => {join_room(socket,room, UID)});
         socket.on("sign up", (uname,pwd,fname) => {sign_up(socket,UID,uname,pwd,fname)});
@@ -131,9 +132,9 @@ io.on("connection", (socket) => {
     });
 });
 io.on("winnings", (winnings) => {
-    for (const UID in winnings) {
+    /*for (const UID in winnings) {
         accountbyUID[UID].winnings += winnings[UID];
-    }
+    }*/
 })
 try{
 loadaccounts();
@@ -142,7 +143,7 @@ catch{}
 
 app.use(express.static(path.join(__dirname, 'app', 'public')));
 function sendhtml(req,res,file){
-    let file_path = path.join(__dirname,"app",`${file}`)
+    let file_path = path.join(__dirname,"app",`${file}`);
     res.sendFile(file_path);
 }
 app.get("/", (req, res) => {

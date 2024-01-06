@@ -5,14 +5,13 @@ socket.on("SendUID", () =>{
     socket.emit("ReturnUID",localStorage.getItem("UID"));
 });
 socket.on("check location", (accountbyUID,UID) =>{
-    const location = window.location.href;
-    if (location === "http://localhost:8000/poker"){
-        if (!accountbyUID[UID]){
+    const pathnames = ["/poker", "/blackjack", "/roulette"];
+    console.log(window.location.pathname)
+        if (pathnames.includes(window.location.pathname)) {        
             alert("You cannot join a game while not logged in");
-            window.location.href = "http://localhost:8000/login";
-        }
-    }
-})
+            window.location.href = "login";
+        };
+});
 socket.on("logged in", () =>{
     try{
         document.querySelector(".user_login").innerHTML = "LOG OUT"

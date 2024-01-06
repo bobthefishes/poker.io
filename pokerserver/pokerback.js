@@ -2,7 +2,6 @@ const SMALLBLIND = 10;
 const BIGBLIND = 20;
 const LETTERS = ["A","B","C","D"];
 const SUITS = ["Hearts","Diamonds","Clubs","Spades"];
-const { on } = require("nodemon");
 const winnerdecoder = require("./winner.js");
 class Deck {
     constructor() {
@@ -44,6 +43,7 @@ class room_instance{
         this.community_cards = [];
         this.potsize = 0;
         this.bettingplayers = [];
+        this.playerbyletter = {};
     }
 }
 
@@ -62,6 +62,7 @@ class player_instance{
         this.stack = 5000;
         this.go = [];
         this.roundbetamount = 0;
+        room_instance.playerbyletter[this.letter] = this;
     }
 }
 
@@ -131,9 +132,6 @@ function playerbet(player,betamount,callamount,room_instance){
 async function getplayerdecision(player,callamount,room_instance){
     return new Promise((resolve, reject) => {
         function handledecision(choice,betamount,callamount){
-            console.log("_________________")
-            console.log(player.letter);
-            console.log("handled");
             if (choice === "bet"){
                 playerbet(player,betamount,callamount,room_instance);
                 resolve(player.go);
@@ -143,7 +141,7 @@ async function getplayerdecision(player,callamount,room_instance){
                 resolve(["fold",callamount]);
             }
         }
-        player.socket.on("users choice",(choice,betamount,callamount) => {
+        player.socket.once("users choice",(choice,betamount,callamount) => {
             handledecision(choice,betamount,callamount)});
     });
 }
@@ -154,9 +152,17 @@ async function playersgo(io,room_instance){
         player.go = ["reset",0];
         player.roundbetamount = 0;
     });
+    //console.log("New round");
     while (!roundfinished){
+        /*
+        console.log("\n\n\n\n");
+        console.log("_________________");
+        room_instance.bettingplayers.forEach((player)=>{
+            console.log(player.letter);
+        });
+        console.log(index);
+        */
         if (room_instance.bettingplayers.length !== 1 && room_instance.activeplayers.length > 0){
-            //issue of checking if the player has already properly called
             const player = room_instance.activeplayers[index];
             let actualcallamount = (room_instance.bettingplayers.indexOf(player)>0)?
             room_instance.bettingplayers[room_instance.bettingplayers.indexOf(player)-1].roundbetamount - 
@@ -164,7 +170,6 @@ async function playersgo(io,room_instance){
             if (actualcallamount > 0 || player.go[0] === "reset"){
                 player.socket.emit("get player decision", player.stack, actualcallamount,player.roundbetamount);
                 const playeraction = await getplayerdecision(player,actualcallamount,room_instance);
-                console.log("handlefinished")
                 player.roundbetamount += playeraction[1]; 
                 //if the player goes all in for less than call amount this will default to actual callamount(on purpose)
                 if (playeraction[0] !== "fold"){
@@ -202,7 +207,29 @@ function showcards(io,room_instance){
 }
 
 function winner(io,room_instance){
-    console.log("We got onto winnings");
+    let bettingcards = {};
+    let winningplayers = [];
+    if (room_instance.bettingplayers.length > 1){
+    room_instance.bettingplayers.forEach((player) =>{
+         bettingcards[player.letter] = player.player_cards;
+    });
+        winningplayers = winnerdecoder.multiplayerwinner(bettingcards,room_instance.community_cards);
+    }
+    else{
+        winningplayers[0] = room_instance.bettingplayers[0].letter
+    };
+    console.log(winningplayers);
+    const sharedpot = (room_instance.potsize / winningplayers.length).toFixed(0);
+    winningplayers.forEach((letter) =>{
+        room_instance.playerbyletter[letter].stack += sharedpot;
+        console.log(letter,room_instance.playerbyletter[letter].stack)
+    });
+    let winnings = {};
+    room_instance.players.forEach((player)=>{
+        winnings[player.UID] = player.stack - 5000;
+        player.socket.emit("Show winnings", (player.stack -5000));
+    });
+    io.emit("winnings", winnings);
 }
 
 async function game_round(io,room_instance){
