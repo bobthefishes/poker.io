@@ -108,7 +108,7 @@ function multiplayerwinner(player_cards,community_cards){ //give playercards as 
     }
     let overallwinner;
     for (const x in hands){
-        if (!overallwinner){overallwinner = x;continue}
+        if (!overallwinner){overallwinner = [x];continue}
         const tempwinner = winner(hands[overallwinner].Deck,hands[overallwinner].Strength,hands[x].Deck,hands[x].Strength);
         if (tempwinner === "2"){
             overallwinner = [x];

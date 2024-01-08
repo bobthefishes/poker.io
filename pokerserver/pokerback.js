@@ -2,6 +2,7 @@ const SMALLBLIND = 10;
 const BIGBLIND = 20;
 const LETTERS = ["A","B","C","D"];
 const SUITS = ["Hearts","Diamonds","Clubs","Spades"];
+const ROUNDS = ["Preflop","Flop","Turn","River"]
 const winnerdecoder = require("./winner.js");
 class Deck {
     constructor() {
@@ -56,13 +57,14 @@ class player_instance{
         this.uname = uname;
         this.player_cards = [];
         room_instance.players.push(this);
+        this.letter = LETTERS[room_instance.players.indexOf(this)];
         room_instance.activeplayers.push(this);
         room_instance.bettingplayers.push(this);
-        this.letter = LETTERS[room_instance.players.indexOf(this)];
-        this.stack = 5000;
-        this.go = [];
-        this.roundbetamount = 0;
         room_instance.playerbyletter[this.letter] = this;
+        this.stack = 5000;
+        this.go = []; //[type,betamount,callamountoveride,roundtype]
+        this.roundbetamount = 0;
+        this.round = ROUNDS[0]
     }
 }
 
@@ -96,31 +98,30 @@ function dealriver(io,room_instance,roomID){
 }
 
 function playerfold(player,room_instance){
-    player.go = ["fold",0];
+    player.go = ["fold",0, null, room_instance.round];
     room_instance.activeplayers.splice(room_instance.activeplayers.indexOf(player),1);
     room_instance.bettingplayers.splice(room_instance.bettingplayers.indexOf(player),1);
 }
 function playerbet(player,betamount,callamount,room_instance){
-    console.log(betamount,callamount);
     if (betamount >= callamount){
         if (betamount === 0){
-            player.go = ["check",0];
+            player.go = ["check",0,null,room_instance.round];
         }
         else if (betamount === player.stack){
-            player.go = ["allin",betamount];
+            player.go = ["allin",betamount,null,room_instance.round];
             room_instance.activeplayers.splice(room_instance.activeplayers.indexOf(player),1);
         }
         else if (betamount === callamount){
-            player.go = ["call", betamount];
+            player.go = ["call", betamount,null,room_instance.round];
         } 
         else{
-            player.go = ["raise",betamount];
+            player.go = ["raise",betamount,null,room_instance.round];
         }
         player.stack -= betamount;
         player.room_instance.potsize += betamount;
     }
     else if (callamount > player.stack){
-        player.go = ["allin",callamount,player.stack];
+        player.go = ["allin",callamount,player.stack,room_instance.round];
         player.stack -= betamount;
         room_instance.potsize += betamount;
         room_instance.activeplayers.splice(room_instance.activeplayers.indexOf(player),1);
@@ -139,7 +140,7 @@ async function getplayerdecision(player,callamount,room_instance){
             }
             else{
                 playerfold(player,room_instance);
-                resolve(["fold",callamount]);
+                resolve(player.go);
             }
         }
         player.socket.once("users choice",(choice,betamount,callamount) => {
@@ -150,24 +151,27 @@ async function playersgo(io,room_instance){
     let index = 0;
     let roundfinished = false;
     room_instance.activeplayers.forEach((player)=>{
-        player.go = ["reset",0];
+        player.go = ["reset",0,null,room_instance.round];
         player.roundbetamount = 0;
     });
-    console.log("New round");
     while (!roundfinished){
-        console.log("\n\n\n\n");
-        console.log("_________________");
-        room_instance.bettingplayers.forEach((player)=>{
-            console.log(player.letter);
-        });
-        console.log(index);
-        console.log(room_instance.activeplayers.length);
         if (room_instance.bettingplayers.length !== 1 && room_instance.activeplayers.length > 0){
             const player = room_instance.activeplayers[index];
-            console.log("Playerletter:",player.letter);
-            let actualcallamount = (room_instance.bettingplayers.indexOf(player)>0)?
-            room_instance.bettingplayers[room_instance.bettingplayers.indexOf(player)-1].roundbetamount - 
-            player.roundbetamount: room_instance.bettingplayers[room_instance.bettingplayers.length-1].roundbetamount-player.roundbetamount;
+            //const lastplayer = (room_instance.bettingplayers.indexOf(player)>0)?
+            //room_instance.bettingplayers[room_instance.bettingplayers.indexOf(player)-1]:
+            //room_instance.bettingplayers[room_instance.bettingplayers.length-1]
+            let lastplayer;
+            for (let i = room_instance.bettingplayers.indexOf(player);i>=0;i--){
+                if (i === 0){
+                    lastplayer = room_instance.bettingplayers[room_instance.bettingplayers.length-1];
+                }else{
+                    lastplayer = room_instance.bettingplayers[i-1];
+                }
+                if (lastplayer.go[3] === room_instance.round){
+                    break
+                }
+            }
+            let actualcallamount = lastplayer.roundbetamount - player.roundbetamount;
             if (actualcallamount > 0 || player.go[0] === "reset"){
                 player.socket.emit("get player decision", player.stack, actualcallamount,player.roundbetamount);
                 const playeraction = await getplayerdecision(player,actualcallamount,room_instance);
@@ -178,11 +182,6 @@ async function playersgo(io,room_instance){
                 }
                 player.socket.emit("decision valid");
                 io.to(room_instance.roomID).emit("show player decision", player.letter, player.go,player.uname,room_instance.potsize);
-                room_instance.bettingplayers.forEach((player)=>{
-                    console.log(player.letter);
-                });
-                console.log(index);
-                console.log(room_instance.activeplayers.length);
                 if (playeraction[0] === "fold" || playeraction[0] === "allin"){
                     if(index === room_instance.activeplayers.length){index = 0};
                     continue;
@@ -196,6 +195,9 @@ async function playersgo(io,room_instance){
                 };
             }else{
                 index++;
+            };
+            if (room_instance.activeplayers.length === 1){
+                room_instance.activeplayers.splice(room_instance.activeplayers.indexOf(player),1);
             };
         }
         else{
@@ -216,36 +218,37 @@ function winner(io,room_instance){
     let bettingcards = {};
     let winningplayers = [];
     if (room_instance.bettingplayers.length > 1){
-    room_instance.bettingplayers.forEach((player) =>{
-         bettingcards[player.letter] = player.player_cards;
-    });
+        room_instance.bettingplayers.forEach((player) =>{
+            bettingcards[player.letter] = player.player_cards;
+        });
         winningplayers = winnerdecoder.multiplayerwinner(bettingcards,room_instance.community_cards);
     }else{
         winningplayers[0] = room_instance.bettingplayers[0].letter
     };
-    const sharedpot = (room_instance.potsize / winningplayers.length).toFixed(0);
+    const sharedpot = parseInt((room_instance.potsize / winningplayers.length));
     winningplayers.forEach((letter) =>{
         room_instance.playerbyletter[letter].stack += sharedpot;
-        console.log(letter,room_instance.playerbyletter[letter].stack)
     });
-    let winnings = {};
+    io.to(room_instance.roomID).emit("winners", winningplayers);
     room_instance.players.forEach((player)=>{
-        winnings[player.UID] = player.stack - 5000;
-        player.socket.emit("Show winnings", (player.stack -5000));
+        player.socket.emit("Show winnings",(player.stack-5000));
     });
-    io.emit("winnings", winnings);
 }
 
 async function game_round(io,room_instance){
     const roomID = room_instance.roomID;
     blinds(io,room_instance,roomID);
     io.to(roomID).emit("game starting");
+    room_instance.round = ROUNDS[0];
     dealplayercards(room_instance);
     await playersgo(io,room_instance);
+    room_instance.round = ROUNDS[1];
     dealflop(io,room_instance,roomID);
     await playersgo(io,room_instance);
+    room_instance.round = ROUNDS[2];
     dealturn(io,room_instance,roomID);
     await playersgo(io,room_instance);
+    room_instance.round = ROUNDS[3];
     dealriver(io,room_instance,roomID);
     await playersgo(io,room_instance);
     showcards(io,room_instance);

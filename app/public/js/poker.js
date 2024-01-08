@@ -65,7 +65,7 @@ socket.on("Blind", (small,big,potsize)=>{
         alert("You are small blind: £10")
     }
     else if (big.UID === localStorage.getItem("UID")){
-        alert("You are big blind: £20")
+        alert("You are big blind: £20   ")
     }
     document.querySelector(".pot_size").innerHTML = `Pot: £${potsize}`
 })
@@ -82,6 +82,7 @@ socket.on("Show winnings", (winnings) =>{
     else{
         alert("You did not loose or make money");
     }
+    socket.emit("gamewinnings", (winnings));
 })
 socket.on("game starting", () =>{
     chatmessage("The game is now starting");
@@ -99,7 +100,7 @@ socket.on("get player decision", (stack,callamount,playeralreadycalled) => {
         document.querySelector(".fold_btn").style.visibility = "visible";
         document.getElementById("bet_input").style.visibility = "hidden";
         document.querySelector(".confirm_bet_btn").style.visibility = "hidden";
-        document.querySelector(".stack").innerHTML = "You can only fold or go all in";
+        document.querySelector(".stack").innerHTML = `You can only fold or go all in (Stack £${stack},callamount:${globalcall})`;
     }
     else{
     document.querySelector(".bet_container").style.visibility = "visible";

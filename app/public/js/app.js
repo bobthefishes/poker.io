@@ -22,3 +22,6 @@ socket.on("logged out", () => {
         document.querySelector(".user_login").innerHTML = "LOG IN"
     }catch{}
 })
+socket.on("Alertmsg",(msg)=>{
+    alert(msg);
+});

@@ -115,6 +115,10 @@ function disconnect(UID){
     }
     catch{}
 }
+function gamewinnings(UID,gamewinnings){
+    accountbyUID[UID].winnings += gamewinnings;
+    saveaccounts();
+}
 io.on("connection", (socket) => {
     socket.emit("SendUID");
     socket.on("ReturnUID", UID =>{
@@ -127,15 +131,11 @@ io.on("connection", (socket) => {
         socket.on("join room", (room) => {join_room(socket,room, UID)});
         socket.on("sign up", (uname,pwd,fname) => {sign_up(socket,UID,uname,pwd,fname)});
         socket.on("log in", (uname,pwd) => {login(socket,UID,uname,pwd)});
+        socket.on("gamewinnings",(winnings) =>{gamewinnings(UID,winnings)});
         socket.on("disconnect", ()=>{disconnect(UID)});
     },15);
     });
 });
-io.on("winnings", (winnings) => {
-    /*for (const UID in winnings) {
-        accountbyUID[UID].winnings += winnings[UID];
-    }*/
-})
 try{
 loadaccounts();
 }
