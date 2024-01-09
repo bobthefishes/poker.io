@@ -12,7 +12,7 @@ window.onload = function () {
   });
 }
 
-const wheel = document.querySelector('.roulette_wheel');
+const wheel = document.getElementById('roulette_wheel');
 const betting_container = document.querySelector('.betting_container')
 const pointer = document.querySelector('.pointer')
 
@@ -22,7 +22,7 @@ function updateWheelSize() {
     if (windowW < 830) {
       wheel.style.width = '300px';
       wheel.style.height = '300px';
-      document.querySelector(".roulette_wheel").style.top = '220px';
+      wheel.style.top = '220px';
       pointer.style.left = `${0.075*windowW+143.25}px`;
       pointer.style.top = '203px';
       betting_container.style.right = '5%';
@@ -33,7 +33,7 @@ function updateWheelSize() {
       betting_container.style.width = '200px';
       wheel.style.width = '450px';
       wheel.style.height = '450px';
-      document.querySelector(".roulette_wheel").style.top = '220px';
+      wheel.style.top = '220px';
       pointer.style.left = `${0.075*windowW+218.25}px`;
       pointer.style.top = '203px';
       betting_container.style.right = '10%';
@@ -42,7 +42,7 @@ function updateWheelSize() {
       betting_container.style.right = '5%';
       wheel.style.width = '450px';
       wheel.style.height = '450px';
-      document.querySelector(".roulette_wheel").style.top = '220px';
+      wheel.style.top = '220px';
       pointer.style.left = `${0.075*windowW+218.25}px`;
       pointer.style.top = '203px';
       betting_container.style.right = '10%';
@@ -51,7 +51,7 @@ function updateWheelSize() {
     else if (windowW < 1300) {
         wheel.style.width = '450px';
         wheel.style.height = '450px';
-        document.querySelector(".roulette_wheel").style.top = '220px';
+        wheel.style.top = '220px';
         pointer.style.left = `${0.075*windowW+218.25}px`;
         pointer.style.top = '203px';
         betting_container.style.right = '10%';
@@ -60,7 +60,7 @@ function updateWheelSize() {
     else if (windowW < 1600) {
         wheel.style.width = '600px';
         wheel.style.height = '600px';
-        document.querySelector(".roulette_wheel").style.top = '220px';
+        wheel.style.top = '220px';
         pointer.style.left = `${0.075*windowW+293.25}px`;
         pointer.style.top = '203px'
         betting_container.style.right = '15%';
@@ -69,7 +69,7 @@ function updateWheelSize() {
     else {
       wheel.style.width = '650px';
       wheel.style.height = '650px';
-      document.querySelector(".roulette_wheel").style.top = '200px';
+      wheel.style.top = '200px';
       pointer.style.left = `${0.075*windowW+318.25}px`;
       pointer.style.top = '183px'
       betting_container.style.right = '15%';

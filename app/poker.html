@@ -11,22 +11,24 @@
 
 <body>
     <div class="menu_bar">
-        <div class="menu_link">
-            <a href="home">HOME</a> <!--move from <a> to <p>, switch onclick() to <div>-->
-        </div>
-        <div class="menu_link">
-            <a href="contactpage">CONTACT</a>
-        </div>
-        <div class="title_section">
-            <a href="play">
-                <h1 class="title">POKER.</h1>
-            </a>
-        </div>
-        <div class="menu_link">
-            <a class="user_login" href="login">LOG IN</a>
-        </div>
-        <div class="menu_link">
-            <a>ACCOUNT</a>
+        <div class="menu_bar">
+            <div class="menu_link">
+                <a href="home">HOME</a>
+            </div>
+            <div class="menu_link">
+                <a href="leaderboard">LEADERBOARDS</a>
+            </div>
+            <div class="title_section">
+                <a href="poker">
+                    <h1 class="title">POKER.</h1>
+                </a>
+            </div>
+            <div class="menu_link">
+                <a class="user_login" href="login">LOG IN</a>
+            </div>
+            <div class="menu_link">
+                <a>ACCOUNT</a>
+            </div>
         </div>
     </div>
     <div class="opponents_section">
@@ -47,7 +49,7 @@
             <div class="card opponent_card playerD_card"></div>
         </div>
     </div>
-    <div class="community_cards">
+    <div id="community_cards" class="gradient-border">
         <div class="card flop community_card"></div>
         <div class="card flop community_card"></div>
         <div class="card flop community_card"></div>
@@ -60,7 +62,7 @@
     </div>
     <button onclick="fold()" class="fold_btn button">Fold</button>
     <div>
-        <div class="testing_container">
+        <div class="testing_container" style="visibility: hidden;">
             <p>Testing stuff</p>
             <p class="playeractionA">PlayerA</p>
             <p class="playeractionB">PlayerB</p>

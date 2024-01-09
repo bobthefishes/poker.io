@@ -1,4 +1,6 @@
 body {
+    overflow-y: hidden;
+    overflow-x: hidden;
     height: 99vh;
     margin: 0px;
     color: white;
@@ -12,20 +14,20 @@ body {
 }
 
 .menu_bar {
-    height: 6.4%;
-    width: 100%;
-    margin: 0%;
-    margin-top: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    background-color: var(--menu_colour);
-    font-weight: 700;
-    border-radius: 0px 0px 15px 15px;
-    /*box-shadow: #1f1f1f 0 10px 10px -10px;*/
-    box-shadow: #5E5DF0 0 10px 20px -10px;
-    z-index: 10;
+  z-index: 10;
+  height: 60px;
+  width: 100%;
+  margin: 0%;
+  margin-top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--menu_colour);
+  font-weight: 700;
+  border-radius: 0px 0px 15px 15px;
+  /*box-shadow: #1f1f1f 0 10px 10px -10px;*/
+  box-shadow: #5e5df0 0 10px 20px -10px;
 }
 
 .menu_link {
@@ -62,8 +64,19 @@ a {
     }
 }
 
+.welcome {
+  position: absolute;
+  font-size: 3rem;
+  left: -10%;
+  top: 20px;
+  width: 100000px;
+  z-index: -1;
+  color: rgba(255, 255, 255, 0.1);
+}
+
 .content_box {
     background-color: white;
+    z-index: 1;
     color: black;
     border-radius: 20px;
     margin: 3%;
@@ -76,13 +89,15 @@ a {
     align-items: center;
     box-shadow: rgba(50, 50, 93, 0.5) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
-
-.how_to_play_container {
-    bottom: 0;
-    right: 0;
+.other_games_container { 
+    top: 60px;
+    left: 20px;
 }
-
-.other_games_container { }
+.how_to_play_container {
+    text-align: center;
+    top: 60px;
+    left: 400px;
+}
 
 .link {
     text-decoration: underline;

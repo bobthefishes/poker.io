@@ -9,10 +9,12 @@ body {
     background-repeat: no-repeat;
     background-color: var(--body_colour);
     background-blend-mode: luminosity;
+    overflow-y: auto;
 }
 
 .room_id_container {
     margin: 1%;
+    margin-top: 50px;
     justify-content: space-evenly;
     display: flex;
     flex-direction: column;
@@ -87,23 +89,25 @@ body {
 
 .opponents_section {
     border: solid white 1px;
+    overflow-y: auto;
     top: 0;
     left: 0;
-    height: 92%;
+    height: 830px;
     width: 15%;
-    background-color: rgba(174, 229, 255, 0.05);
+    background-color: var(--opp_section_bg);
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    border-radius: 0px 20px 0px 0px;
+    border-radius: 0px 20px 20px 0px;
 }
 
 .menu_bar {
-    height: 6.4%;
-    width: 98%;
-    margin: 1%;
+    z-index: 10;
+    height: 60px;
+    width: 100%;
+    margin: 0%;
     margin-top: 0;
     display: flex;
     flex-direction: row;
@@ -113,27 +117,27 @@ body {
     font-weight: 700;
     border-radius: 0px 0px 15px 15px;
     /*box-shadow: #1f1f1f 0 10px 10px -10px;*/
-    box-shadow: #5E5DF0 0 10px 20px -10px;
+    box-shadow: #5e5df0 0 10px 20px -10px;
     z-index: 10;
-}
-
-.menu_link {
+  }
+  
+  .menu_link {
     width: 5%;
     text-align: center;
     padding: 0.5%;
     border-radius: 25px;
     transition: transform 0.2s;
-
+  
     &:hover {
-        /*background-color: var(--menu_item_hover_colour);*/
-        transform: scale(1.1);
-        cursor: pointer;
+      /*background-color: var(--menu_item_hover_colour);*/
+      transform: scale(1.1);
+      cursor: pointer;
     }
-}
-a {
+  }
+  a {
     text-decoration: none;
     color: var(--font_colour);
-}
+  }
 
 .title {
     /*border: solid var(--title_border_colour) 2px;*/
@@ -150,20 +154,47 @@ a {
     }
 }
 
-.community_cards {
-    background-color: var(--community_cards_background_colour);
-    /*border: solid #6a6ada 5px;*/
+#community_cards {
+    display: flex;
     align-items: center;
-    border-radius: 25px;
+    justify-content: space-evenly;
     position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 170px;
+    left: 30%;
     height: var(--community_section_height);
     width: var(--community_section_width);
-    display: flex;
-    justify-content: space-evenly;
     max-width: 710px;
+    border-radius: 25px;
+}
+.gradient-border {
+    --borderWidth: 2px;
+    background: var(--body_colour);
+    position: relative;
+    border-radius: var(--borderWidth);
+}
+.gradient-border:after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--borderWidth));
+    left: calc(-1 * var(--borderWidth));
+    height: calc(100% + var(--borderWidth) * 2);
+    width: calc(100% + var(--borderWidth) * 2);
+    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    border-radius: 25px;
+    z-index: -1;
+    animation: animatedgradient 3s ease alternate infinite;
+    background-size: 300% 300%;
+}
+@keyframes animatedgradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
 }
 
 .player_cards {
@@ -173,7 +204,7 @@ a {
     align-items: center;
     border-radius: 0px 25px 0px 25px;
     position: absolute;
-    top: 70%;
+    top: 700px;
     left: 50%;
     transform: translate(-50%, -50%);
     height: var(--player_section_height);
@@ -194,7 +225,7 @@ a {
     background-repeat: no-repeat;
     border-radius: 17%;
     background-size: 110% 110%;
-    box-shadow: rgba(17, 17, 26, 0.75) 0 10px 16px 0px;
+    box-shadow: rgba(17, 17, 26, 0.5) 0 10px 16px 0px;
     transition: transform 0.5s ease;
     transform-style: preserve-3d;
     background-color: var(--player_cards_background_colour);
@@ -206,8 +237,9 @@ a {
 
 .opponent_cards {
     display: flex;
+    position: relative;
     margin: 1rem;
-    height: 19.5%;
+    height: 175px;
     width: 88%;
     justify-content: space-around;
     align-items: center;
@@ -247,7 +279,7 @@ a {
     background-size: 110% 110%;
     background-color: var(--community_cards_background_colour);
     border-radius: 17%;
-    box-shadow: rgba(17, 17, 26, 0.75) 0 10px 16px 0px;
+    box-shadow: rgba(17, 17, 26, 0.5) 0 10px 16px 0px;
     transition: transform 0.3s ease;
     transform-style: preserve-3d;
     margin: 1%;
@@ -415,20 +447,21 @@ html {
     --body_colour: rgb(10, 10, 20);
     --menu_colour: rgb(245, 245, 255);
     --menu_item_hover_colour: rgb(125, 125, 125);
-    --community_cards_background_colour: rgba(42, 152, 164, 0.6);
+    --community_cards_background_colour: rgba(0, 229, 255, 0.3);
     --player_cards_background_colour: rgba(174, 229, 255, 0.6);
-    --player_card_height: 80%;
+    --player_card_height: 250px;
     --player_card_width: 35%;
-    --player_section_height: 32.5%;
+    --player_section_height: 300px;
     --player_section_width: 25.5%;
-    --community_card_height: 68%;
+    --community_card_height: 270px;
     --community_card_width: 13.5%;
-    --community_section_height: 26%;
+    --community_section_height: 225px;
     --community_section_width: 44%;
     --title_colour: #5E5DF0;
     --title_border_colour: white;
     --betting_background_colour: rgba(42, 152, 164, 0.6);
     --pot_background_colour: rgba(255, 0, 0, 0.6);
-    --opp_card_height: 92%;
-    --opp_card_width: 43.5%;
+    --opp_card_height: 270px;
+    --opp_card_width: 44%;
+    --opp_section_bg: rgba(174, 229, 255, 0.03)
 }
