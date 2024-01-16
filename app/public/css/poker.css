@@ -90,6 +90,7 @@ body {
 .opponents_section {
     border: solid white 1px;
     overflow-y: auto;
+    overflow-x: hidden;
     top: 0;
     left: 0;
     height: 830px;
