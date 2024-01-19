@@ -1,3 +1,5 @@
+const { Socket } = require("socket.io");
+
 let stack = 5000;
 let bet_inputs = document.querySelectorAll('.bet_input');
 

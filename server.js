@@ -19,6 +19,7 @@ class Account{
         this.pwd = pwd;
         this.fname = fname;
         this.winnings = winnings;
+        this.ingame = false;
         accountbyUID[this.UID] = this;
         accountbyUname[this.uname] = this;
     }
@@ -67,13 +68,17 @@ function sign_up(socket,UID,uname,pwd,fname){
 }
 function create_room(socket,UID){
     let roomID = Math.floor(Math.random() * 900000) + 100000;
-    while (rooms[roomID]){
+    try{
+    while (rooms[roomID].players.length > 0){
         roomID = Math.floor(Math.random() * 900000) + 100000;
+        }
     }
+    catch{}
     socket.join(roomID);
     socket.emit("joined room", roomID, accountbyUID[UID]);
     rooms[roomID] = new poker.room_instance(roomID);
     new poker.player_instance(socket,UID,accountbyUID[UID].uname,rooms[roomID]);
+    accountbyUID[UID].ingame = true;
 }
 async function join_room(socket,roomID,UID){
     roomID = parseInt(roomID);
@@ -88,13 +93,17 @@ async function join_room(socket,roomID,UID){
             socket.join(roomID);
             io.to(roomID).emit("joined room", roomID, accountbyUID[UID]);
             new poker.player_instance(socket,UID,accountbyUID[UID].uname,rooms[roomID]);
+            accountbyUID[UID].ingame = true;
             if (rooms[roomID].players.length === 4){
-                await poker.game_round(io,rooms[roomID]);
+                const players = await poker.game_round(io,rooms[roomID]);
+                players.forEach((player)=>{
+                    accountbyUID[player.UID].ingame = false;
+                })
+                delete rooms[roomID];
             }
         }
     }
 }
-
 async function UIDsetup(socket,UID){
     if (!UID || !storedUID[UID]){
         socket.emit("UID", socket.id);
@@ -107,18 +116,42 @@ async function UIDsetup(socket,UID){
     }
     return UID
 }
-function disconnect(UID){
-    try{
-        storedUID[UID].disconnecttimer = setTimeout(() => {
-            delete storedUID[UID];
-        }, 10000);
+async function log_out(socket,UID){
+    const validlogin = await new Promise((resolve, reject) => {
+        if (accountbyUID[UID].ingame){
+            resolve(false);
+        }else{
+            socket.emit("querylocation");
+            socket.on("locationanswer",(location)=>{
+            const pathnames = ["/blackjack", "/roulette"]; //poker removed as in game tester
+                if (pathnames.includes(location)){
+                    resolve(false);
+                }
+                else{
+                    resolve(true)
+                }
+            });
+        }
+    });
+    if (validlogin){
+        delete storedUID[UID];
+        socket.emit("reloadpage");
     }
-    catch{}
+    else{
+        socket.emit("message", "You cannot log out whilst in a game");
+    }
 }
 function gamewinnings(UID,gamewinnings){
     accountbyUID[UID].winnings += gamewinnings;
     saveaccounts();
 }
+function disconnect(socket,UID){
+    try{
+    accountbyUID[UID].ingame = false;
+    }
+    catch{}
+    //add poker logic
+};
 io.on("connection", (socket) => {
     socket.emit("SendUID");
     socket.on("ReturnUID", UID =>{
@@ -132,7 +165,8 @@ io.on("connection", (socket) => {
         socket.on("sign up", (uname,pwd,fname) => {sign_up(socket,UID,uname,pwd,fname)});
         socket.on("log in", (uname,pwd) => {login(socket,UID,uname,pwd)});
         socket.on("gamewinnings",(winnings) =>{gamewinnings(UID,winnings)});
-        socket.on("disconnect", ()=>{disconnect(UID)});
+        socket.on("log out", ()=>{log_out(socket,UID)});
+        socket.on("disconnect", ()=>{disconnect(socket,UID)});
     },15);
     });
 });
