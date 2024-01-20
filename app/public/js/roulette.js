@@ -1,5 +1,3 @@
-const { Socket } = require("socket.io");
-
 let stack = 5000;
 let bet_inputs = document.querySelectorAll('.bet_input');
 
@@ -80,62 +78,69 @@ function updateWheelSize() {
 window.addEventListener('resize', updateWheelSize);
 
 let total_r = 0;
+let not_spinning = true;
 
 function spinWheel() {
-  let total_bet = 0;
-  let bets = [];
-  bet_inputs.forEach(x => {
-    bets.push(x.value);
-    total_bet += parseInt(x.value);
-  });
-  console.log(total_bet, bets);
+  if (not_spinning) {  
+    let total_bet = 0;
+    let bets = [];
+    bet_inputs.forEach(x => {
+      bets.push(x.value);
+      total_bet += parseInt(x.value);
+    });
+    console.log(total_bet, bets);
 
-  if (total_bet <= stack) {
-    document.querySelector('.stack').innerHTML = `Your stack: ${stack}`;
-    const max = 1860;
-    const min = 1500;
-    const rotation = Math.trunc(Math.floor(Math.random() * (max - min + 1)) + min);
-    total_r += rotation;
-    document.querySelector('.wheel').style.transform = `rotate(${total_r}deg)`;
+    if (total_bet <= stack) {
+      document.querySelector('.stack').innerHTML = `Your stack: £${stack}`;
+      const max = 1860;
+      const min = 1500;
+      const rotation = Math.trunc(Math.floor(Math.random() * (max - min + 1)) + min);
+      total_r += rotation;
+      document.querySelector('.wheel').style.transform = `rotate(${total_r}deg)`;
 
-    find_slot(total_r);
+      find_slot(total_r);
 
-    stack -= total_bet;
+      stack -= total_bet;
 
-    //wait 4s so the stack updates after the spin, not before the spin finishes.
-    if (outcome['number']%2 === 0) {
-      stack += parseInt(bets[2]) * 2;
-    } else {
-      stack += parseInt(bets[3]) * 2;
-    };
-    if (outcome['color'] === 'red') {
-      stack += parseInt(bets[0]) * 2;
-    } else if (outcome['color'] === 'black') {
-      stack += parseInt(bets[1]) * 2;
-    };
-
-    document.querySelector('.stack').innerHTML = `Your stack: ${stack}`;
-    change_max_bets();
-  } else {
-    showNotification("Bet is too high...");
-  }
-}
-
-function change_max_bets() {
-  max_bet = stack;
-  bet_inputs.forEach(x => {
-    x.max = `${max_bet}`;
-    x.min = '0';
-    if (stack === 0) {
-      const spin_btn = document.querySelector('.spin_btn');
-      spin_btn.disabled = true;
-      spin_btn.innerHTML = 'Your stack is empty...';
-      spin_btn.style.backgroundColor = 'red';
-      spin_btn.style.boxShadow = 'none';
-      spin_btn.style.color = 'white';
+      //wait 4s so the stack updates after the spin, not before the spin finishes.
+      not_spinning = false;
+      setTimeout(updateStack, 4000)
+      function updateStack() {
+        if (outcome['number']%2 === 0) {
+          stack += parseInt(bets[2]) * 2;
+        } else {
+          stack += parseInt(bets[3]) * 2;
+        };
+        if (outcome['color'] === 'red') {
+          stack += parseInt(bets[0]) * 2;
+        } else if (outcome['color'] === 'black') {
+          stack += parseInt(bets[1]) * 2;
+        };
+        document.querySelector('.stack').innerHTML = `Your stack: ${stack}`;
+        change_max_bets();
+        not_spinning = true;
     }
-  })
-  show_value('red'); show_value('black'); show_value('even'); show_value('odd');
+    } else {
+      showNotification("Bet is too high...");
+    }
+  }
+
+  function change_max_bets() {
+    max_bet = stack;
+    bet_inputs.forEach(x => {
+      x.max = `${max_bet}`;
+      x.min = '0';
+      if (stack === 0) {
+        const spin_btn = document.querySelector('.spin_btn');
+        spin_btn.disabled = true;
+        spin_btn.innerHTML = 'Your stack is empty...';
+        spin_btn.style.backgroundColor = 'red';
+        spin_btn.style.boxShadow = 'none';
+        spin_btn.style.color = 'white';
+      }
+    })
+    show_value('red'); show_value('black'); show_value('even'); show_value('odd');
+  }
 }
 
 let degrees_per_segment = 9.72972972972972972972972972972972972972972972972972972973;
