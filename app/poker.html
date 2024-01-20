@@ -33,20 +33,23 @@
     </div>
     <div class="opponents_section">
         <div class="playerA_cards opponent_cards">
-            <div class="card opponent_card playerA_card"></div>
-            <div class="card opponent_card playerA_card"></div>
+            <div class="card opponent_card opp_card1"></div>
+            <div class="card opponent_card playerA_card opp_card2"></div>
         </div>
+        <hr class="cards_divider">
         <div class="playerB_cards opponent_cards">
-            <div class="card opponent_card playerB_card"></div>
-            <div class="card opponent_card playerB_card"></div>
+            <div class="card opponent_card playerB_card opp_card1"></div>
+            <div class="card opponent_card playerB_card opp_card2"></div>
         </div>
+        <hr class="cards_divider">
         <div class="playerC_cards opponent_cards">
-            <div class="card opponent_card playerC_card"></div>
-            <div class="card opponent_card playerC_card"></div>
+            <div class="card opponent_card playerC_card opp_card1"></div>
+            <div class="card opponent_card playerC_card opp_card2"></div>
         </div>
+        <hr class="cards_divider">
         <div class="playerD_cards opponent_cards">
-            <div class="card opponent_card playerD_card"></div>
-            <div class="card opponent_card playerD_card"></div>
+            <div class="card opponent_card playerD_card opp_card1"></div>
+            <div class="card opponent_card playerD_card opp_card2"></div>
         </div>
     </div>
     <div id="community_cards" class="gradient-border">
@@ -87,14 +90,15 @@
         </div>
     </div>
     <div>
+        <h2 class="createroom_header">Create or join a room:</h2>
         <div class="room_id_container">
             <form class="room_form" onsubmit="room(event)">
                 <input type="text" pattern="[0-9]*" placeholder="Room id" class="roominput">
-                <button type="submit">Submit</button>
+                <button type="submit" class="roomid_button submit_button">Submit</button>
             </form>
             <p class="roomID">Room ID:</p>
             <p class="players">Players: </p>
-            <button class="createroom">Createroom</button>
+            <button class="roomid_button createroom_button">Createroom</button>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>

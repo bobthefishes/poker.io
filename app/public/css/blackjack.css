@@ -136,7 +136,7 @@ a {
   align-items: center;
   border-radius: 0px 25px 0px 25px;
   position: absolute;
-  top: 750px;
+  top: 650px;
   left: 50%;
   transform: translate(-50%, -50%);
   height: var(--player_section_height);
@@ -221,7 +221,7 @@ a {
   align-items: center;
   border-radius: 0px 25px 0px 25px;
   position: absolute;
-  top: 425px;
+  top: 325px;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -299,7 +299,7 @@ a {
   flex-direction: column;
   position: absolute;
   right: 0px;
-  top: 350px;
+  top: 250px;
   height: 100px;
   width: 265px;
   padding: 1.1%;
@@ -446,5 +446,5 @@ html {
   --dealer_section_width: 95%;
   --title_colour: #5e5df0;
   --title_border_colour: white;
-  --betting_background_colour: rgba(42, 152, 164, 0.6);
+  --betting_background_colour: rgba(132, 216, 255, 0.695);
 }

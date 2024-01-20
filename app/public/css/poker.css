@@ -3,22 +3,37 @@ body {
     margin: 0px;
     color: white;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-image: url(../assets/favicon.png);
-    background-position: center, center;
-    background-size: 250px;
+    background-image: url(../assets/chips.png);
+    background-position: center 400px;
+    background-size: 200px;
     background-repeat: no-repeat;
     background-color: var(--body_colour);
     background-blend-mode: luminosity;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
+.createroom_header {
+    position: absolute;
+    top: 80px;
+    right: 15px;
+    text-decoration: underline red;
+}
 .room_id_container {
-    margin: 1%;
-    margin-top: 50px;
+    position: absolute;
+    background-color: var(--player_cards_background_colour);
+    top: 50px;
+    margin-left: 0px;
+    margin-top: 100px;
     justify-content: space-evenly;
     display: flex;
     flex-direction: column;
     width: 10%;
+    right: 0px;
+    padding: 20px;
+    padding-right: 80px;
+    border-radius: 10px 0px 0px 10px;
+    box-shadow: rgba(132, 216, 255, 0.195) 10px 10px 0px;
 }
 .room_form {
     display: flex;
@@ -29,6 +44,7 @@ body {
 .roominput {
     max-width: 190px;
     padding: 0.5%;
+    padding-left: 7.5px;
     border: none;
     border-radius: 4px;
     box-shadow: 2px 2px 7px 0 rgb(0, 0, 0, 0.2);
@@ -38,12 +54,10 @@ body {
     height: 30px;
     margin-right: 5px;
   }
-  
 .roominput:invalid {
     animation: justshake 0.3s forwards;
     color: red;
 }
-  
 @keyframes justshake {
     25% {
       transform: translateX(5px);
@@ -62,34 +76,33 @@ body {
     }
 }
 
-.room_id_btn {
-    background: #5E5DF0;
-    border-radius: 999px;
-    box-shadow: #5E5DF0 0 10px 20px -10px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-size: 100%;
-    line-height: 24px;
-    outline: 0 solid transparent;
-    padding: 2.5% 3%;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    width: fit-content;
-    word-break: break-word;
-    border: 0;
-    margin: 1%;
-
+.roomid_button {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: var(--font_colour);
+    justify-content: space-evenly;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    transition: transform 0.5s ease;
     &:hover {
-        background-color: white;
-        color: #5E5DF0;
+        transform: scale(0.9);
     }
+}
+.createroom_button {
+    padding: 7.5px;
+    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 114%;
+    color: var(--font_colour);
 }
 
 .opponents_section {
     border: solid white 1px;
     overflow-y: auto;
+    overflow-x: hidden;
     top: 0;
     left: 0;
     height: 830px;
@@ -101,6 +114,21 @@ body {
     align-items: center;
     margin-top: 20px;
     border-radius: 0px 20px 20px 0px;
+    padding: 10px;
+}
+.opp_card1 {
+    position: absolute;
+    left: 13%;
+}
+.opp_card2 {
+    position: absolute;
+    right: 13%;
+}
+.cards_divider {
+    width: 90%;
+    margin: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .menu_bar {
@@ -165,10 +193,11 @@ body {
     width: var(--community_section_width);
     max-width: 710px;
     border-radius: 25px;
+    margin-right: 0px;
 }
 .gradient-border {
     --borderWidth: 2px;
-    background: var(--body_colour);
+    background: var(--community_cards_background_colour);
     position: relative;
     border-radius: var(--borderWidth);
 }
@@ -200,7 +229,7 @@ body {
 .player_cards {
     background-color: var(--player_cards_background_colour);
     /*border: solid rgb(93, 125, 190) 5px;*/
-    box-shadow: #5E5DF0 0 15px 20px -10px;
+    box-shadow: rgba(132, 216, 255, 0.295) 0 15px 75px -10px;
     align-items: center;
     border-radius: 0px 25px 0px 25px;
     position: absolute;
@@ -238,7 +267,7 @@ body {
 .opponent_cards {
     display: flex;
     position: relative;
-    margin: 1rem;
+    margin: 0px;
     height: 175px;
     width: 88%;
     justify-content: space-around;
@@ -259,7 +288,7 @@ body {
     transition: transform 0.5s ease;
     transform-style: preserve-3d;
     background-color: rgba(174, 229, 255, 0.05);
-    opacity: 0.8;
+    opacity: 1;
     z-index: 2;
 
     &:hover {
@@ -419,13 +448,14 @@ body {
     position: absolute;
     justify-content: space-evenly;
     right: 0px;
-    top: 50%;
+    top: 475px;
     height: 40px;
     width: 110px;
     border-radius: 20px;
     padding: 1%;
     margin: 2%;
-    box-shadow: rgba(17, 17, 26, 0.5) 0px 4px 16px, rgba(17, 17, 26, 0.5) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    border: solid white 1px;
+    box-shadow: rgba(255, 0, 0, 0.15) 10px 10px 0px
 }
 
 /* testing */
@@ -443,18 +473,18 @@ body {
 
 html {
     --font_colour: rgb(42, 42, 44);
-    /*--body_colour: rgb(24, 83, 54);8*/
+    /*--body_colour: rgb(24, 83, 54);*/
     --body_colour: rgb(10, 10, 20);
     --menu_colour: rgb(245, 245, 255);
     --menu_item_hover_colour: rgb(125, 125, 125);
-    --community_cards_background_colour: rgba(0, 229, 255, 0.3);
-    --player_cards_background_colour: rgba(174, 229, 255, 0.6);
+    --community_cards_background_colour: rgb(17, 17, 29);
+    --player_cards_background_colour: rgba(132, 216, 255, 0.695);
     --player_card_height: 250px;
     --player_card_width: 35%;
     --player_section_height: 300px;
     --player_section_width: 25.5%;
     --community_card_height: 270px;
-    --community_card_width: 13.5%;
+    --community_card_width: 14%;
     --community_section_height: 225px;
     --community_section_width: 44%;
     --title_colour: #5E5DF0;
@@ -463,5 +493,5 @@ html {
     --pot_background_colour: rgba(255, 0, 0, 0.6);
     --opp_card_height: 270px;
     --opp_card_width: 44%;
-    --opp_section_bg: rgba(174, 229, 255, 0.03)
+    --opp_section_bg: rgb(17, 17, 29);
 }

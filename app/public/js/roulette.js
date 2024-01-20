@@ -13,7 +13,7 @@ window.onload = function () {
 }
 
 const wheel = document.getElementById('roulette_wheel');
-const betting_container = document.querySelector('.betting_container')
+const betting_container = document.getElementById('betting_container')
 const pointer = document.querySelector('.pointer')
 
 function updateWheelSize() {
@@ -39,7 +39,6 @@ function updateWheelSize() {
       betting_container.style.right = '10%';
     }
     else if (windowW < 1200) {
-      betting_container.style.right = '5%';
       wheel.style.width = '450px';
       wheel.style.height = '450px';
       wheel.style.top = '220px';
@@ -54,7 +53,7 @@ function updateWheelSize() {
         wheel.style.top = '220px';
         pointer.style.left = `${0.075*windowW+218.25}px`;
         pointer.style.top = '203px';
-        betting_container.style.right = '10%';
+        betting_container.style.right = '12.5%';
         betting_container.style.width = '350px';
     } 
     else if (windowW < 1600) {
@@ -63,7 +62,7 @@ function updateWheelSize() {
         wheel.style.top = '220px';
         pointer.style.left = `${0.075*windowW+293.25}px`;
         pointer.style.top = '203px'
-        betting_container.style.right = '15%';
+        betting_container.style.right = '12.5%';
         betting_container.style.width = '350px';
     } 
     else {
@@ -72,8 +71,8 @@ function updateWheelSize() {
       wheel.style.top = '200px';
       pointer.style.left = `${0.075*windowW+318.25}px`;
       pointer.style.top = '183px'
-      betting_container.style.right = '15%';
-      betting_container.style.width = '350px';
+      betting_container.style.right = '10%';
+      betting_container.style.width = '400px';
     }
 }
 window.addEventListener('resize', updateWheelSize);

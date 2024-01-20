@@ -3,10 +3,10 @@ body {
   height: 99vh;
   margin: 0px;
   color: white;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  background-position: center, center;
-  background-size: 250px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  background-image: none;
+  background-position: center 350px;
+  background-size: 200px;
   background-repeat: no-repeat;
   background-color: var(--body_colour);
   background-blend-mode: luminosity;
@@ -171,22 +171,30 @@ a {
   width: 100%;
   background-color: red;
 }
-.betting_container {
-  background-color: var(--betting_background_colour);
+#betting_container {
+  z-index: 2;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   position: absolute;
   right: 20%;
-  top: 210px;
-  height: 550px;
+  top: 110px;
+  height: 650px;
   width: 350px;
   padding: 1%;
   border-radius: 20px 20px 20px 20px;
   margin: 2%;
   margin-right: 0;
-  box-shadow: rgba(174, 229, 255, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.5) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  /*box-shadow: rgba(174, 229, 255, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.5) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;*/
   justify-content: space-evenly;
-  z-index: 0;
+  background: var(--betting_background_colour);
+}
+.bet_option {
+  margin-top: -20px;
+}
+
+.divider {
+  width: 100%;
 }
 
 .button {
@@ -209,7 +217,7 @@ a {
 .spin_btn {
   background: #6ef05d;
   border-radius: 999px;
-  box-shadow: #6ef05d 0 10px 20px -10px;
+  box-shadow: #6ef05d2c 0 10px 50px 10px;
   padding: 8px 18px;
   margin: 5px;
   transition: transform 0.2s ease;
@@ -232,5 +240,5 @@ html {
   --menu_item_hover_colour: rgb(125, 125, 125);
   --title_colour: #5e5df0;
   --title_border_colour: white;
-  --betting_background_colour: rgba(42, 152, 164, 0.6);
+  --betting_background_colour: rgba(132, 216, 255, 0);
 }

@@ -35,31 +35,37 @@
         <div id="roulette_wheel" class="gradient-border">
             <img class="wheel" class="gradient-border" src="assets/roulette-wheel-3-removebg-preview.png"></img>
         </div>
-        <div class="betting_container">
-            <div class="red">
+        <!--<div id="betting_container" class="gradient-border-box">-->
+        <div id="betting_container">
+            <hr class="divider">
+            <div class="red bet_option">
                 <h2>RED:</h2>
                 <p class="betting_amount" id="betting_amount_red"></p>
                 <input type="range" class="bet_input" id="bet_input_red" max="2500" step="5" min="0"
                     oninput="show_value('red'); change_max_bets()">
             </div>
-            <div class="black">
+            <hr class="divider">
+            <div class="black bet_option">
                 <h2>BLACK:</h2>
                 <p class="betting_amount" id="betting_amount_black"></p>
                 <input type="range" class="bet_input" id="bet_input_black" max="2500" step="5" min="0"
                     oninput="show_value('black'); change_max_bets()">
             </div>
-            <div class="even">
+            <hr class="divider">
+            <div class="even bet_option">
                 <h2>EVEN:</h2>
                 <p class="betting_amount" id="betting_amount_even"></p>
                 <input type="range" class="bet_input" id="bet_input_even" max="2500" step="5" min="0"
                     oninput="show_value('even'); change_max_bets()">
             </div>
-            <div class="odd">
+            <hr class="divider">
+            <div class="odd bet_option">
                 <h2>ODD:</h2>
                 <p class="betting_amount" id="betting_amount_odd"></p>
                 <input type="range" class="bet_input" id="bet_input_odd" max="2500" step="5" min="0"
                     oninput="show_value('odd'); change_max_bets()">
             </div>
+            <hr class="divider">
             <button class="spin_btn button" onclick="spinWheel()">SPIN</button>
         </div>
         <script src="/socket.io/socket.io.js"></script>
