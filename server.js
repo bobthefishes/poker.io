@@ -6,7 +6,6 @@ const http = require("http").Server(app);
 const port = 8000;
 const io = require("socket.io")(http);
 const poker = require("./pokerserver/pokerback.js");
-const { error } = require("console");
 let storedUID = {};
 let rooms = {};
 let accountbyUID = {};
@@ -178,6 +177,7 @@ catch{}
 process.on("uncaughtException", async()=>{
     console.error(error);
     await saveaccounts();
+    process.exit(1)
 })
 app.use(express.static(path.join(__dirname, 'app', 'public')));
 function sendhtml(req,res,file){

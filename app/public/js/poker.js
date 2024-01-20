@@ -145,7 +145,7 @@ socket.on("invalid room", () =>{
     chatmessage("Invalid room");
     document.querySelector(".roominput").value = null;
 })
-document.querySelector(".createroom").addEventListener("click", () =>{
+document.querySelector(".createroom_button").addEventListener("click", () =>{
     socket.emit("create room");
 })
 function room(event){
