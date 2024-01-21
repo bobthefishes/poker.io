@@ -43,8 +43,8 @@ function winner(playerA_deck, playerA_hand_strength, playerB_deck, playerB_hand_
     return kicker(hand_type, playerA_hand_strength[1], playerA_deck, playerB_deck)
 }
 function kicker(hand_type, handstrength, playerA_deck, playerB_deck) {
-    let A_filter_deck = filter_deck(playerA_deck, [[handstrength]].flat(Infinity)).sort(function (a, b) { return b[0] - a[0] });
-    let B_filter_deck = filter_deck(playerB_deck, [[handstrength]].flat(Infinity)).sort(function (a, b) { return b[0] - a[0] });
+    let A_filter_deck = filter_deck(playerA_deck, [[handstrength]]).sort(function (a, b) { return b[0] - a[0] });
+    let B_filter_deck = filter_deck(playerB_deck, [[handstrength]]).sort(function (a, b) { return b[0] - a[0] });
     if (hand_type === 8) {
         if (A_filter_deck[0] > B_filter_deck[0]) {
             return "1"
