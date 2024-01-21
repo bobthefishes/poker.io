@@ -12,5 +12,9 @@ socket.on("invalid details", (type) => {
     document.querySelector(".invalid").innerHTML = `Invalid ${type}`
 })
 socket.on("logged in", () =>{
-    window.location.href = "poker";
+    if(document.referrer.indexOf(window.location.origin) !== 0){
+        window.location.href = "home";
+    }else{
+        history.go(-1); 
+    }
 })

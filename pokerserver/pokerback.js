@@ -248,7 +248,6 @@ async function game_round(io,room_instance){
         resolve(room_instance.players);
     });
 }
-
 module.exports = {
     game_round,
     room_instance,
