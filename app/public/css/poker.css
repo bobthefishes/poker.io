@@ -169,6 +169,9 @@ body {
     text-decoration: none;
     color: var(--font_colour);
   }
+.playerearnings {
+    color: red; 
+}
 
 .title {
     /*border: solid var(--title_border_colour) 2px;*/
