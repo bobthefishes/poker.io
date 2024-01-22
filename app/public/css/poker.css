@@ -100,10 +100,11 @@ body {
 }
 
 .opponents_section {
+    position: absolute;
     border: solid white 1px;
     overflow-y: auto;
     overflow-x: hidden;
-    top: 0;
+    top: 60px;
     left: 0;
     height: 830px;
     width: 15%;
@@ -147,6 +148,8 @@ body {
     /*box-shadow: #1f1f1f 0 10px 10px -10px;*/
     box-shadow: #5e5df0 0 10px 20px -10px;
     z-index: 10;
+    position: fixed;
+    top: 0px;
   }
   
   .menu_link {

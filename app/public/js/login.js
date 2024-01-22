@@ -8,7 +8,9 @@ socket.on("invalid details", (type) => {
     document.querySelector(".invalid").innerHTML = `Invalid ${type}`
 })
 socket.on("logged in", () =>{
-    if(document.referrer.indexOf(window.location.origin) !== 0){
+    console.log(document.referrer)
+    console.log(window.location.origin)
+    if(document.referrer.indexOf(window.location.origin) !== 0 || document.referrer.indexOf("signup")){
         window.location.href = "home";
     }else{
         history.go(-1); 
