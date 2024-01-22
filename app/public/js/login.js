@@ -10,7 +10,7 @@ socket.on("invalid details", (type) => {
 socket.on("logged in", () =>{
     console.log(document.referrer)
     console.log(window.location.origin)
-    if(document.referrer.indexOf(window.location.origin) !== 0 || document.referrer.indexOf("signup")){
+    if(document.referrer.indexOf(window.location.origin) !== 0 || document.referrer.includes("signup")){
         window.location.href = "home";
     }else{
         history.go(-1); 
