@@ -124,7 +124,7 @@ function is_pair(deck) {
     return [false]
 }
 function highcard(deck) {
-    return deck.at(-1)[0]
+    return deck[deck.length-1][0]
 }
 function handvalue(player, player_cards, community_cards, raw = false) {
     let deck = make_deck(player_cards, community_cards);
