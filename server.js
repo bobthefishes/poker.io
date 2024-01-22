@@ -44,9 +44,9 @@ async function saveaccounts(){
 function login(socket,UID,uname,pwd){
     if (accountbyUname[uname]){
         if (accountbyUname[uname].pwd === pwd){
-            socket.emit("logged in");
             let playeraccount = accountbyUname[uname];
             playeraccount.updateUID(UID);
+            socket.emit("logged in", accountbyUID[UID].winnings);
             saveaccounts();
         }else{
             socket.emit("invalid details", "wrong password");
@@ -61,8 +61,8 @@ function sign_up(socket,UID,uname,pwd,fname){
         socket.emit("invalid details", "used username");
     }
     else{
-        socket.emit("logged in");
         new Account(UID,uname,pwd,fname);
+        socket.emit("logged in", accountbyUID[UID].winnings);
         saveaccounts()
     }
 }
@@ -157,7 +157,7 @@ io.on("connection", (socket) => {
     socket.on("ReturnUID", UID =>{
         setTimeout(async() => {
         UID = await UIDsetup(socket,UID);
-        if (accountbyUID[UID]){socket.emit("logged in")}else{
+        if (accountbyUID[UID]){socket.emit("logged in", accountbyUID[UID].winnings)}else{
         socket.emit("check location", accountbyUID,UID);
         }
         socket.on("create room", () => {create_room(socket, UID)});

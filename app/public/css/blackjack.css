@@ -42,6 +42,8 @@ body {
   /*box-shadow: #1f1f1f 0 10px 10px -10px;*/
   box-shadow: #5e5df0 0 10px 20px -10px;
   z-index: 10;
+  top: 0px;
+  position: fixed;
 }
 
 .menu_link {
@@ -60,6 +62,9 @@ body {
 a {
   text-decoration: none;
   color: var(--font_colour);
+}
+.playerearnings {
+    color: red; 
 }
 
 .title {

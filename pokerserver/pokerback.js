@@ -245,6 +245,7 @@ async function game_round(io,room_instance){
         await playersgo(io,room_instance);
         showcards(io,room_instance);
         winner(io,room_instance);
+        io.to(roomID).emit("reload page")
         resolve(room_instance.players);
     });
 }

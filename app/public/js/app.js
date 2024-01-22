@@ -20,9 +20,11 @@ socket.on("reloadpage", ()=>{
 socket.on("message", (message)=>{
     alert(message);
 })
-socket.on("logged in", () =>{
+socket.on("logged in", (stack) =>{
     try{
-        document.querySelector(".user_login").innerHTML = "LOG OUT"
+        document.querySelector(".user_login").innerHTML = "LOG OUT";
+        document.querySelector(".playerearnings").innerHTML = `£${stack}`;
+        document.querySelector(".playerearnings").removeAttribute("href");
     }catch{}
 });
 function login(){
