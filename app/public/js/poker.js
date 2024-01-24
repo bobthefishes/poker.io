@@ -70,6 +70,9 @@ socket.on("Blind", (small,big,potsize)=>{
     document.querySelector(".pot_size").innerHTML = `Pot: £${potsize}`
 })
 socket.on("winners", (winners) =>{
+    winners.forEach((letter)=>{
+        showNotification("WINNER!",`noti${letter}`);
+    });
     alert(`The winner(s) were: ${winners.join(", ")}`);
 })
 socket.on("Show winnings", (winnings) =>{
