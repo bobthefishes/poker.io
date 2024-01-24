@@ -86,6 +86,9 @@ socket.on("Show winnings", (winnings) =>{
 })
 socket.on("game starting", () =>{
     chatmessage("The game is now starting");
+    showNotification('Game starting...', 'noti');
+    document.querySelectorAll(".card").classList.remove('greyscale');
+    document.querySelector(".pot_container").style.visibility = 'visible';
 })
 
 let globalcall;
@@ -139,7 +142,7 @@ socket.on("decision valid", () => {choicecompleted()});
 window.onload = () => {choicecompleted()}
 /*Rooms */
 socket.on("joined room", (roomID,letter,uname) => {
-    document.querySelector(".room_id_container").style.visibility = "hidden";
+    document.querySelector(".room_id_container").classList.add('removeID');
     document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
     showNotification(`${uname} joined!`,`noti${letter}`);
 })
