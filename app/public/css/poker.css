@@ -34,6 +34,7 @@ body {
     padding-right: 80px;
     border-radius: 10px 0px 0px 10px;
     box-shadow: rgba(132, 216, 255, 0.195) 10px 10px 0px;
+    z-index: 2;
 }
 .room_form {
     display: flex;
@@ -464,8 +465,50 @@ body {
     box-shadow: rgba(255, 0, 0, 0.15) 10px 10px 0px
 }
 
+.notification {
+    display: none;
+    position: fixed;
+    padding: 15px;
+    background-color: rgba(143, 239, 134, 0.736);
+    color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeInOut 3s ease-in-out;
+    z-index: 10;
+    left: 10%;
+}
+#notiA {
+    top: 155px;
+}
+#notiB {
+    top: 372.5px;
+}
+#notiC {
+    top: 590px;
+}
+#notiD {
+    top: 807.5px;
+}
+
+@keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+}
+
+
 /* testing */
 .testing_container {
+    display: none;
     position: absolute;
     right: 0px;
     top: 10%;
@@ -474,7 +517,7 @@ body {
     border-radius: 10px;
     padding: 15px;
     margin: 5px;
-    z-index: 10;
+    z-index: 1;
 }
 
 html {

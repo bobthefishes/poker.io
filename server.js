@@ -79,6 +79,8 @@ function create_room(socket,UID){
     rooms[roomID] = new poker.room_instance(roomID);
     new poker.player_instance(socket,UID,accountbyUID[UID].uname,rooms[roomID]);
     accountbyUID[UID].ingame = true;
+    document.querySelector(".room_id_container").style.visibility = "hidden";
+
 }
 async function join_room(socket,roomID,UID){
     roomID = parseInt(roomID);
@@ -101,6 +103,7 @@ async function join_room(socket,roomID,UID){
                 })
                 delete rooms[roomID];
             }
+            document.querySelector(".room_id_container").style.visibility = "hidden";
         }
     }
 }

@@ -39,23 +39,23 @@ socket.on("show cards", (playera,playerb,playerc,playerd)=>{
 socket.on("show player decision", (letter,action,uname,potsize) =>{
     const decisionblock = document.querySelector(`.playeraction${letter}`);
     if (action[0] === "fold"){
-        decisionblock.innerHTML = `${uname} folded`;
+        showNotification(`${uname}: Fold`, `noti${letter}`)
     }
     else if (action[0] === "check"){
-        decisionblock.innerHTML = `${uname} checked`;
+        showNotification(`${uname}: Check`, `noti${letter}`)
     }
     else if (action[0] === "call"){
-        decisionblock.innerHTML = `${uname} called`;
+        showNotification(`${uname}: Call`, `noti${letter}`)
     }
     else if (action[0] === "raise"){
-        decisionblock.innerHTML = `${uname} bet ${action[1]}`;
+        showNotification(`${uname}: Raise to ${action[1]}`, `noti${letter}`)
     }
     else if (action[0] === "allin"){
         if (action[2]){
-            decisionblock.innerHTML = `${uname} went all in for ${action[2]}`;
+            showNotification(`${uname}: All-in for ${action[2]}`, `noti${letter}`)
         }
         else{
-            decisionblock.innerHTML = `${uname} went all in for ${action[1]}`;
+            showNotification(`${uname}: All-in for ${action[1]}`, `noti${letter}`)
         }
     }
     document.querySelector(".pot_size").innerHTML = `Pot: £${potsize}`
@@ -156,3 +156,13 @@ function room(event){
 function chatmessage(msg){
     document.querySelector(".roomID").innerHTML = msg;    
 }
+
+function showNotification(text, target) {
+    var notification = document.getElementById(target);
+    notification.innerHTML = text;
+    notification.style.display = 'block';
+  
+    setTimeout(function() {
+      notification.style.display = 'none';
+    }, 3000);
+  }
