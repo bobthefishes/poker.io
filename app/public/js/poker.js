@@ -142,13 +142,26 @@ function choicecompleted(){
     document.querySelector(".fold_btn").style.visibility = "hidden";
 }
 socket.on("decision valid", () => {choicecompleted()});
-window.onload = () => {choicecompleted()}
+window.onload = () => {choicecompleted()};
 /*Rooms */
 socket.on("joined room", (roomID,letter,uname) => {
     document.querySelector(".room_id_container").classList.add('removeID');
     document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
     showNotification(`${uname} joined!`,`noti${letter}`);
+    LETTERS = ["A","B","C","D"];
+    LETTERS.forEach((playerletter)=>{
+        if (LETTERS.indexOf(playerletter) > LETTERS.indexOf(letter)){
+            return
+        };
+        document.querySelectorAll(`.player${playerletter}_card`).forEach((card)=> {
+            card.classList.remove("greyscale");
+        });
+    });
 })
+socket.on("invalid (full) room", ()=>{
+    document.querySelector(".roomID").innerHTML = "Full room";
+    document.querySelector(".roominput").value = null;    
+});
 socket.on("invalid room", () =>{
     document.querySelector(".roomID").innerHTML = "Invalid room";
     document.querySelector(".roominput").value = null;
