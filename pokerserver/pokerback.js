@@ -252,5 +252,6 @@ async function game_round(io,room_instance){
 module.exports = {
     game_round,
     room_instance,
-    player_instance
+    player_instance,
+    LETTERS
 }

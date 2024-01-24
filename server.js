@@ -75,12 +75,10 @@ function create_room(socket,UID){
     }
     catch{}
     socket.join(roomID);
-    socket.emit("joined room", roomID, accountbyUID[UID]);
     rooms[roomID] = new poker.room_instance(roomID);
     new poker.player_instance(socket,UID,accountbyUID[UID].uname,rooms[roomID]);
+    socket.emit("joined room", roomID,poker.LETTERS[0],accountbyUID[UID].uname);
     accountbyUID[UID].ingame = true;
-    document.querySelector(".room_id_container").style.visibility = "hidden";
-
 }
 async function join_room(socket,roomID,UID){
     roomID = parseInt(roomID);
@@ -93,8 +91,8 @@ async function join_room(socket,roomID,UID){
         }
         else{
             socket.join(roomID);
-            io.to(roomID).emit("joined room", roomID, accountbyUID[UID]);
             new poker.player_instance(socket,UID,accountbyUID[UID].uname,rooms[roomID]);
+            io.to(roomID).emit("joined room", roomID,poker.LETTERS[rooms[roomID].players.length-1],accountbyUID[UID].uname);
             accountbyUID[UID].ingame = true;
             if (rooms[roomID].players.length === 4){
                 const players = await poker.game_round(io,rooms[roomID]);
@@ -103,7 +101,6 @@ async function join_room(socket,roomID,UID){
                 })
                 delete rooms[roomID];
             }
-            document.querySelector(".room_id_container").style.visibility = "hidden";
         }
     }
 }

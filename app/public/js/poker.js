@@ -138,14 +138,16 @@ function choicecompleted(){
 socket.on("decision valid", () => {choicecompleted()});
 window.onload = () => {choicecompleted()}
 /*Rooms */
-socket.on("joined room", (roomID,account) => {
-    chatmessage(`Room ID: ${roomID} ${account.uname}`);
+socket.on("joined room", (roomID,letter,uname) => {
+    document.querySelector(".room_id_container").style.visibility = "hidden";
+    document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
+    showNotification(`${uname} joined!`,`noti${letter}`);
 })
 socket.on("invalid room", () =>{
-    chatmessage("Invalid room");
+    document.querySelector(".roomID").innerHTML = "Invalid room";
     document.querySelector(".roominput").value = null;
 })
-document.querySelector(".createroom_button").addEventListener("click", () =>{
+document.querySelector(".createroom_button").addEventListener("click", () => {
     socket.emit("create room");
 })
 function room(event){
@@ -153,15 +155,10 @@ function room(event){
     const roomID = document.querySelector(".roominput").value;
     socket.emit("join room", roomID);
 }
-function chatmessage(msg){
-    document.querySelector(".roomID").innerHTML = msg;    
-}
-
 function showNotification(text, target) {
     var notification = document.getElementById(target);
     notification.innerHTML = text;
     notification.style.display = 'block';
-  
     setTimeout(function() {
       notification.style.display = 'none';
     }, 3000);
