@@ -1,19 +1,9 @@
 const table = document.querySelector('.main_table');
-
 async function getData() {
-  try {
-    const response = await fetch('../../accouns.json');
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
-    const accounts = await response.json();
-
-    console.log(accounts);
-  } catch (error) {
-    console.error('Error:', error.message);
-  }
+  socket.emit("return player winnings");
+  return new Promise((resolve, reject) => {
+      socket.on("player winnings", (winnings)=>{
+        resolve(winnings);
+      });
+  });
 }
-
-getData();
