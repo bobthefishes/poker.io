@@ -180,7 +180,7 @@ body {
     color: var(--font_colour);
   }
 .playerearnings {
-    color: red; 
+    text-decoration: underline red;
 }
 
 .title {
