@@ -149,7 +149,7 @@ function returnplayerwinnings(socket){
     let returnval = [];
     for (const UID in accountbyUID){
         const account = accountbyUID[UID]
-        returnval.push([account.uname,account.winnings, account.winnings]);
+        returnval.push([account.uname,account.winnings, account.UID]);
     }
     socket.emit("player winnings",returnval);
 }
