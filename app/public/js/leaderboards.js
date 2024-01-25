@@ -13,7 +13,8 @@ async function displayBoard() {
   try {
     const leaderBoard = await getData();
     console.log(leaderBoard);
-    leaderBoard.forEach(player => {
+    const sortedLeaderBoard = leaderBoard.sort((a, b) => b[1] - a[1]);
+    sortedLeaderBoard.forEach(player => {
       var row = table.insertRow(-1);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
