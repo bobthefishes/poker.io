@@ -5,11 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboards</title>
+    <link rel="icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="css/leaderboards.css" id="css-styles">
 </head>
 
 <body>
-    <table class="main_table"></table>
-    <button onclick="getData()">B</button>
+    <div class="menu_bar">
+        <div class="menu_link">
+            <a href="home">HOME</a>
+        </div>
+        <div class="menu_link">
+            <a href="leaderboard">LEADERBOARDS</a>
+        </div>
+        <div class="title_section">
+            <a href="poker">
+                <h1 class="title">POKER.IO</h1>
+            </a>
+        </div>
+        <div class="menu_link" onclick="login()">
+            <a class="user_login">LOG IN</a>
+        </div>
+        <div class="menu_link">
+            <a class="playerearnings" href="signup">SIGN UP</a>
+        </div>
+    </div>
+    <h1 class="lb_header">CURRENT LEADERBOARDS:</h1>
+    <table class="main_table">
+        <tr class="headers">
+            <th class="name_h">USERNAME</th>
+            <th class="winnings_h">WINNINGS (£)</th>
+        </tr>
+    </table>
+    <button class="btn" onclick="displayBoard()">B</button>
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
