@@ -26,6 +26,6 @@ async function displayBoard() {
     console.error('Error:', error.message);
   }
 }
-window.onload = ()=> {
-  setTimeout(displayBoard, 100);
-}
+socket.on("page loaded", ()=>{
+  displayBoard();
+})

@@ -168,6 +168,7 @@ io.on("connection", (socket) => {
             if (accountbyUID[UID]) { socket.emit("logged in", accountbyUID[UID].winnings) } else {
                 socket.emit("check location", accountbyUID, UID);
             }
+            socket.emit("page loaded");
             socket.on("create room", () => { create_room(socket, UID) });
             socket.on("join room", (room) => { join_room(socket, room, UID) });
             socket.on("sign up", (uname, pwd, fname) => { sign_up(socket, UID, uname, pwd, fname) });
