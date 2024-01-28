@@ -477,7 +477,7 @@ body {
 
 .notification {
     display: none;
-    position: fixed;
+    position: absolute;
     padding: 15px;
     background-color: rgba(143, 239, 134, 0.736);
     color: #ffffff;
