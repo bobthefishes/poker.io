@@ -6,7 +6,16 @@ async function getData() {
     });
   });
 }
-
+async function refreshboard(){
+  try{
+    const table = document.querySelector('.main_table');
+    table.innerHTML = '<tr class="headers"><th class="name_h">USERNAME</th><th class="winnings_h">WINNINGS (£)</th></tr>';
+    await displayBoard();
+  }
+  catch(error){
+    console.error(error.message);
+  }
+}
 async function displayBoard() {
   try {
     const table = document.querySelector('.main_table');

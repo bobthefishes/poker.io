@@ -177,6 +177,8 @@ io.on("connection", (socket) => {
             socket.on("return player winnings", ()=>{returnplayerwinnings(socket)})
             socket.on("log out", () => { log_out(socket, UID) });
             socket.on("disconnect", () => { disconnect(socket, UID) });
+            socket.on("disconnecting", ()=>{
+            })
         }, 15);
     });
 });

@@ -12,19 +12,19 @@ function updateWheelSize() {
       betting_container.style.width = `${bwidth}px`;      
     }
     const windowW = window.innerWidth;
-    if (windowW < 830) {updateWheelSize(300,300,220,0.075*windowW+143.25,203,5,200)}
-    else if (windowW < 1000) {updateWheelSize(450,450,220,0.075*windowW+218.25,203,10,200)}
-    else if (windowW < 1200) {updateWheelSize(450,450,220,0.075*windowW+218.25,203,10,350)} 
-    else if (windowW < 1300) {updateWheelSize(450,450,220,0.075*windowW+218.25,203,12.5,350)} 
-    else if (windowW < 1600) {updateWheelSize(600,600,220,0.075*windowW+293.25,203,12.5,350)}
-    else {updateWheelSize(650,650,200,0.075*windowW+318.25,183,10,400)}
+    if (windowW < 830) {updateWheelSize(300,300,220,(0.075*windowW+143.25),203,5,200)}
+    else if (windowW < 1000) {updateWheelSize(450,450,220,(0.075*windowW+218.25),203,10,200)}
+    else if (windowW < 1200) {updateWheelSize(450,450,220,(0.075*windowW+218.25),203,10,350)} 
+    else if (windowW < 1300) {updateWheelSize(450,450,220,(0.075*windowW+218.25),203,12.5,350)} 
+    else if (windowW < 1600) {updateWheelSize(600,600,220,(0.075*windowW+293.25,203),12.5,350)}
+    else {updateWheelSize(650,650,200,(0.075*windowW+318.25),183,10,400)}
 }
 window.addEventListener('resize', updateWheelSize);
 
 let stack = 5000;
 let bet_inputs = document.querySelectorAll('.bet_input');
 
-window.onload = function () {
+socket.on("page loaded",()=> {
   document.querySelector(".stack").innerHTML = `Your stack: £${stack}`;
   document.querySelectorAll('.betting_amount').forEach(x => {
     x.innerHTML = 'Your bet: £';
@@ -33,7 +33,7 @@ window.onload = function () {
   bet_inputs.forEach(x => {
     x.min = '0';
   });
-}
+});
 let total_r = 0;
 let not_spinning = true;
 

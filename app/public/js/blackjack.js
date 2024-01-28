@@ -173,9 +173,9 @@ let bet;
 let stack = 5000;
 let done_stand = false;
 let blackjack = false;
-window.onload = function () {
+socket.on("page loaded",()=> {
   document.querySelector(".stack").innerHTML = `Your stack: £${stack}`;
-}
+});
 
 function handle_betInput() {
   let inputValue = document.querySelector(".bet_input").value;

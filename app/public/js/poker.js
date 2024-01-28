@@ -86,6 +86,8 @@ socket.on("Show winnings", (winnings) =>{
         alert("You did not loose or make money");
     }
     socket.emit("gamewinnings", (winnings));
+
+    ingame = false;
 })
 socket.on("game starting", () =>{
     chatmessage("The game is now starting");
@@ -93,7 +95,7 @@ socket.on("game starting", () =>{
     document.querySelectorAll(".card").classList.remove('greyscale');
     document.querySelector(".pot_container").style.visibility = 'visible';
 })
-
+let ingame = false;
 let globalcall;
 let globalstack;
 let globalbetoffset;
@@ -142,8 +144,7 @@ function choicecompleted(){
     document.querySelector(".fold_btn").style.visibility = "hidden";
 }
 socket.on("decision valid", () => {choicecompleted()});
-window.onload = () => {choicecompleted()};
-/*Rooms */
+socket.on("page loaded", () => {choicecompleted()});
 socket.on("joined room", (roomID,letter,uname) => {
     document.querySelector(".room_id_container").classList.add('removeID');
     document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
@@ -157,6 +158,7 @@ socket.on("joined room", (roomID,letter,uname) => {
             card.classList.remove("greyscale");
         });
     });
+    ingame = true;
 })
 socket.on("invalid (full) room", ()=>{
     document.querySelector(".roomID").innerHTML = "Full room";
@@ -182,3 +184,8 @@ function showNotification(text, target) {
       notification.style.display = 'none';
     }, 3000);
   }
+window.addEventListener('beforeunload', function (e) {
+    if (ingame){
+        e.returnValue = true;
+    }
+});
