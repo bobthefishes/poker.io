@@ -22,10 +22,18 @@ socket.on("river", (dealtcards) => {
     dealcards(".river",[dealtcards]);
 })
 socket.on("show cards", (playera,playerb,playerc,playerd)=>{
+    console.log(playera,playerb,playerc,playerd);
     dealcards(".playerA_card",playera);
     dealcards(".playerB_card",playerb);
-    dealcards(".playerC_card",playerc);
-    dealcards(".playerD_card",playerd);
+    if (playerc){
+        console.log("jo")
+        dealcards(".playerC_card",playerc);
+        if (playerd){
+            console.log("Joijoj")
+            dealcards(".playerD_card",playerd);
+        }
+    }
+    
 })
 socket.on("show player decision", (letter,action,uname,potsize) =>{
     if (action[0] === "fold"){

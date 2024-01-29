@@ -94,7 +94,7 @@ async function join_room(socket, roomID, UID) {
             new poker.player_instance(socket, UID, accountbyUID[UID].uname, rooms[roomID]);
             io.to(roomID).emit("joined room", roomID, poker.LETTERS[rooms[roomID].players.length - 1], accountbyUID[UID].uname);
             accountbyUID[UID].ingame = true;
-            if (rooms[roomID].players.length === 4) {
+            if (rooms[roomID].players.length === 3) {
                 const players = await poker.game_round(io, rooms[roomID]);
                 players.forEach((player) => {
                     accountbyUID[player.UID].ingame = false;
