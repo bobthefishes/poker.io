@@ -58,7 +58,7 @@ function is_flush(deck, returnflushdeck = false) {
         let suit_deck = suit_lists[suit]
         if (suit_deck.length >= 5) {
             if (!returnflushdeck) {
-                return [true, suit_deck.at(-1)[0]]
+                return [true, suit_deck[suit_deck.length-1][0]]
             } else {
                 return suit_deck
             }
@@ -86,7 +86,7 @@ function is_straight(deck) {
     for (let x of slice) {
         slice_val.push(x[0]);
     }
-    if (slice_val.join("") === [2, 3, 4, 5].join("") && unique_deck.at(-1)[0] === 14) {
+    if (slice_val.join("") === [2, 3, 4, 5].join("") && unique_deck[unique_deck.length-1][0] === 14) {
         return [true, 5]
     }
     return [false]
