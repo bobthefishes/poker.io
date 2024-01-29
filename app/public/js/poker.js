@@ -12,23 +12,14 @@ socket.on("player cards", (dealtcards,letter) => {
     dealcards(".player_card",dealtcards);
     dealcards(`.player${letter}_card`,dealtcards);
 })
-function resetactiontext(){
-    document.querySelector(".playeractionA").innerHTML = "PlayerA";
-    document.querySelector(".playeractionB").innerHTML = "PlayerB";
-    document.querySelector(".playeractionC").innerHTML = "PlayerC";
-    document.querySelector(".playeractionD").innerHTML = "PlayerD";
-}
 socket.on("flop", (dealtcards) => {
     dealcards(".flop",dealtcards);
-    resetactiontext();
 })
 socket.on("turn", (dealtcards) => {
     dealcards(".turn",[dealtcards]);
-    resetactiontext();
 })
 socket.on("river", (dealtcards) => {
     dealcards(".river",[dealtcards]);
-    resetactiontext();
 })
 socket.on("show cards", (playera,playerb,playerc,playerd)=>{
     dealcards(".playerA_card",playera);
@@ -37,9 +28,11 @@ socket.on("show cards", (playera,playerb,playerc,playerd)=>{
     dealcards(".playerD_card",playerd);
 })
 socket.on("show player decision", (letter,action,uname,potsize) =>{
-    const decisionblock = document.querySelector(`.playeraction${letter}`);
     if (action[0] === "fold"){
         showNotification(`${uname}: Fold`, `noti${letter}`)
+        document.querySelectorAll(`.player${letter}_card`).forEach((card)=> {
+            card.classList.add("greyscale");
+        });
     }
     else if (action[0] === "check"){
         showNotification(`${uname}: Check`, `noti${letter}`)
@@ -90,9 +83,7 @@ socket.on("Show winnings", (winnings) =>{
     ingame = false;
 })
 socket.on("game starting", () =>{
-    chatmessage("The game is now starting");
     showNotification('Game starting...', 'noti');
-    document.querySelectorAll(".card").classList.remove('greyscale');
     document.querySelector(".pot_container").style.visibility = 'visible';
 })
 let ingame = false;

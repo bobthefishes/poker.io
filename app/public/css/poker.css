@@ -486,6 +486,7 @@ body {
     animation: fadeInOut 3s ease-in-out;
     z-index: 10;
     left: 10%;
+    max-width: 120px;
 }
 #notiA {
     top: 155px;
