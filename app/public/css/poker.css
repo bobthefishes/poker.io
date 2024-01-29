@@ -38,7 +38,7 @@ body {
     transition: transform 0.5s ease-in;
 }
 .room_id_container.removeID {
-    transform: translateX(1000px);
+    transform: translateX(500px);
 }
 
 .room_form {
@@ -162,7 +162,7 @@ body {
     top: 0px;
   }
   
-  .menu_link {
+.menu_link {
     width: 5%;
     text-align: center;
     padding: 0.5%;
@@ -519,22 +519,6 @@ body {
       opacity: 0;
     }
 }
-
-
-/* testing */
-.testing_container {
-    display: none;
-    position: absolute;
-    right: 0px;
-    top: 10%;
-    height: 150px;
-    width: 400px;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 5px;
-    z-index: 1;
-}
-
 html {
     --font_colour: rgb(42, 42, 44);
     /*--body_colour: rgb(24, 83, 54);*/

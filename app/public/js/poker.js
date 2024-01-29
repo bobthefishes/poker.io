@@ -137,8 +137,13 @@ function choicecompleted(){
 socket.on("decision valid", () => {choicecompleted()});
 socket.on("page loaded", () => {choicecompleted()});
 socket.on("joined room", (roomID,letter,uname) => {
-    document.querySelector(".room_id_container").classList.add('removeID');
-    document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
+    if (document.querySelector(".room_id_container")){
+        document.querySelector(".room_id_container").classList.add('removeID');
+        setTimeout(() => {
+            document.querySelector(".room_id_container").parentNode.removeChild(document.querySelector(".room_id_container"));  
+        },500);
+        document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
+    }
     showNotification(`${uname} joined!`,`noti${letter}`);
     LETTERS = ["A","B","C","D"];
     LETTERS.forEach((playerletter)=>{
