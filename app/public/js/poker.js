@@ -172,8 +172,12 @@ socket.on("invalid room", () =>{
     document.querySelector(".roomID").innerHTML = "Invalid room";
     document.querySelector(".roominput").value = null;
 })
+socket.on("invalid room params", ()=>{
+    document.querySelector(".roomID").innerHTML = "Invalid room settings";
+})
 document.querySelector(".createroom_button").addEventListener("click", () => {
-    socket.emit("create room");
+    const nplayers = Number(document.getElementById("nplayers").value);
+    socket.emit("create room",nplayers);
 })
 function room(event){
     event.preventDefault();

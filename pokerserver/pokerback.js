@@ -36,7 +36,7 @@ const game_deck = new Deck();
 game_deck.shufflecards();
 
 class room_instance{
-    constructor(roomID){
+    constructor(roomID,nplayers){
         this.roomID = roomID;
         this.players = [];
         this.activeplayers = [];
@@ -44,6 +44,7 @@ class room_instance{
         this.potsize = 0;
         this.bettingplayers = [];
         this.playerbyletter = {};
+        this.nplayers = nplayers;
     }
 }
 class player_instance{

@@ -66,7 +66,11 @@ function sign_up(socket, UID, uname, pwd, fname) {
         saveaccounts()
     }
 }
-function create_room(socket, UID) {
+function create_room(socket, UID,nplayers) {
+    if (nplayers > 4 || nplayers < 2){
+        socket.emit("invalid room params");
+        return
+    }
     let roomID = Math.floor(Math.random() * 900000) + 100000;
     try {
         while (rooms[roomID].players.length > 0) {
@@ -75,7 +79,7 @@ function create_room(socket, UID) {
     }
     catch { }
     socket.join(roomID);
-    rooms[roomID] = new poker.room_instance(roomID);
+    rooms[roomID] = new poker.room_instance(roomID,nplayers);
     new poker.player_instance(socket, UID, accountbyUID[UID].uname, rooms[roomID]);
     socket.emit("joined room", roomID, poker.LETTERS[0], accountbyUID[UID].uname);
     accountbyUID[UID].ingame = true;
@@ -94,7 +98,7 @@ async function join_room(socket, roomID, UID) {
             new poker.player_instance(socket, UID, accountbyUID[UID].uname, rooms[roomID]);
             io.to(roomID).emit("joined room", roomID, poker.LETTERS[rooms[roomID].players.length - 1], accountbyUID[UID].uname);
             accountbyUID[UID].ingame = true;
-            if (rooms[roomID].players.length === 3) {
+            if (rooms[roomID].players.length === rooms[roomID].nplayers) {
                 const players = await poker.game_round(io, rooms[roomID]);
                 players.forEach((player) => {
                     accountbyUID[player.UID].ingame = false;
@@ -169,7 +173,7 @@ io.on("connection", (socket) => {
                 socket.emit("check location", accountbyUID, UID);
             }
             socket.emit("page loaded");
-            socket.on("create room", () => { create_room(socket, UID) });
+            socket.on("create room", (nplayers) => { create_room(socket, UID,nplayers) });
             socket.on("join room", (room) => { join_room(socket, room, UID) });
             socket.on("sign up", (uname, pwd, fname) => { sign_up(socket, UID, uname, pwd, fname) });
             socket.on("log in", (uname, pwd) => { login(socket, UID, uname, pwd) });
