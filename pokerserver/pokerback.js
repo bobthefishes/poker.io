@@ -229,26 +229,24 @@ function winner(io,room_instance){
     });
 }
 async function game_round(io,room_instance){
-    return new Promise(async(resolve, reject) => {
-        const roomID = room_instance.roomID;
-        blinds(io,room_instance,roomID);
-        io.to(roomID).emit("game starting");
-        room_instance.round = ROUNDS[0];
-        dealplayercards(room_instance);
-        await playersgo(io,room_instance);
-        room_instance.round = ROUNDS[1];
-        dealflop(io,room_instance,roomID);
-        await playersgo(io,room_instance);
-        room_instance.round = ROUNDS[2];
-        dealturn(io,room_instance,roomID);
-        await playersgo(io,room_instance);
-        room_instance.round = ROUNDS[3];
-        dealriver(io,room_instance,roomID);
-        await playersgo(io,room_instance);
-        showcards(io,room_instance);
-        winner(io,room_instance);
-        resolve(room_instance.players);
-    });
+    const roomID = room_instance.roomID;
+    blinds(io,room_instance,roomID);
+    io.to(roomID).emit("game starting");
+    room_instance.round = ROUNDS[0];
+    dealplayercards(room_instance);
+    await playersgo(io,room_instance);
+    room_instance.round = ROUNDS[1];
+    dealflop(io,room_instance,roomID);
+    await playersgo(io,room_instance);
+    room_instance.round = ROUNDS[2];
+    dealturn(io,room_instance,roomID);
+    await playersgo(io,room_instance);
+    room_instance.round = ROUNDS[3];
+    dealriver(io,room_instance,roomID);
+    await playersgo(io,room_instance);
+    showcards(io,room_instance);
+    winner(io,room_instance);
+    room_instance.players;
 }
 module.exports = {
     game_round,

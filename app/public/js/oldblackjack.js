@@ -6,30 +6,30 @@ const suits = {
 }
 class Deck {
   constructor() {
-      this.deck = [];
-      for (const suit in suits) {
-          for (let i = 2; i < 15; i++) {
-              this.deck.push([i, suit]);
-          }
+    this.deck = [];
+    for (const suit in suits) {
+      for (let i = 2; i < 15; i++) {
+        this.deck.push([i, suit]);
       }
+    }
   }
   resetcards() {
-      this.deck = [];
-      for (const suit in suits) {
-          for (let i = 2; i < 15; i++) {
-              this.deck.push([i, suit]);
-          }
+    this.deck = [];
+    for (const suit in suits) {
+      for (let i = 2; i < 15; i++) {
+        this.deck.push([i, suit]);
       }
-      this.shufflecards();
+    }
+    this.shufflecards();
   }
   shufflecards() {
-      for (let i = this.deck.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
-      }
+    for (let i = this.deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
+    }
   }
   returncard() {
-      return this.deck.pop();
+    return this.deck.pop();
   }
 }
 
@@ -93,7 +93,7 @@ function player_card() {
     var n = 0;
     dealerCards.forEach(card => {
       n++;
-      if (n===1) {
+      if (n === 1) {
         turn_over_dealerCard(card);
       }
     })
@@ -112,7 +112,7 @@ function dealer_card() {
     var n = 0;
     Cards.forEach(card => {
       n++;
-      if (n===2) {
+      if (n === 2) {
         turn_over_dealerCard(card)
       }
     })
@@ -153,7 +153,7 @@ function go_again() {
     card.style.backgroundImage = 'url(../assets/cardBackBlue.png)';
     card.classList.remove('flip');
     card.style.backgroundSize = "110% 110%";
-    if (n>2) {
+    if (n > 2) {
       card.parentNode.removeChild(card);
     }
   })
@@ -163,7 +163,7 @@ function go_again() {
     card.classList.remove('flip');
     card.style.backgroundImage = 'url(../assets/cardBackRed.png)';
     card.style.backgroundSize = "110% 110%";
-    if (m>2) {
+    if (m > 2) {
       card.parentNode.removeChild(card);
     }
   })
@@ -179,7 +179,7 @@ let bet;
 let stack = 5000;
 let done_stand = false;
 let blackjack = false;
-socket.on("page loaded",()=> {
+socket.on("page loaded", () => {
   document.querySelector(".stack").innerHTML = `Your stack: £${stack}`;
 });
 
@@ -188,7 +188,7 @@ function handle_betInput() {
   let inputValue = document.querySelector(".bet_input").value;
   inputValue = inputValue.replace(/[^0-9]/g, '');
   if (inputValue.length > 3) {
-    inputValue = inputValue.substring(0,3);
+    inputValue = inputValue.substring(0, 3);
   }
   document.querySelector(".bet_input").value = inputValue;
   bet = inputValue;
@@ -210,15 +210,15 @@ function dealer_stand() {
   console.log("dealer stand");
   const winner = get_winner(player_hand, dealer_hand);
   document.querySelector(".winner").innerHTML = `Winner: ${winner}`;
-  if (winner === 'player' && blackjack===false) {
-    stack = stack + 2*pot;
+  if (winner === 'player' && blackjack === false) {
+    stack = stack + 2 * pot;
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
-    showNotification(`You win £${2*pot}!`)
+    showNotification(`You win £${2 * pot}!`)
   }
-  else if (winner==='player' && blackjack===true) {
-    stack = stack + 1.5*(2*pot);
+  else if (winner === 'player' && blackjack === true) {
+    stack = stack + 1.5 * (2 * pot);
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
-    showNotification(`You win £${1.5*(2*pot)}!`)
+    showNotification(`You win £${1.5 * (2 * pot)}!`)
   }
   else if (winner === 'push') {
     stack = stack + pot;
@@ -232,7 +232,7 @@ function dealer_stand() {
 function stand() {
   console.log("stand")
   if (!done_stand && done_deal) {
-    dealer_card();    done_stand = true;
+    dealer_card(); done_stand = true;
     if (player_hand <= 21) {
       dealer_hit();
     }
@@ -253,7 +253,7 @@ function split() {
     showNotification('Hand 1...');
     document.getElementById('playerCard1').classList.add('hand1');
     document.getElementById('playerCard2').classList.add('hand2');
-    
+
   }
 }
 
@@ -278,7 +278,7 @@ function hit() {
     }
     while (player_hand > 21 && player_aces > 0) {
       console.log('accounting for player aces', player_aces)
-      player_hand  = player_hand - 10;
+      player_hand = player_hand - 10;
       player_aces = player_aces - 1;
       console.log(player_hand)
     }
@@ -286,7 +286,7 @@ function hit() {
       document.querySelector(".hit_btn").disabled = true;
       stand();
     }
-      
+
     console.log(`player hand: ${player_hand}`)
   }
 }
@@ -295,7 +295,7 @@ function dealer_hit() {
   console.log("dealer hit")
   let blah = false;
   while (!blah) {
-    while (dealer_hand<17 && player_hand<=21) {
+    while (dealer_hand < 17 && player_hand <= 21) {
       num_hits_dealer++;
       const newCard = document.createElement('div')
       document.querySelector('.dealer_cards').appendChild(newCard);
@@ -305,17 +305,17 @@ function dealer_hit() {
       turn_over_dealerCard(newCard);
       console.log(`dealer hand: ${dealer_hand}`)
     }
-    while (dealer_hand>21 && dealer_aces>0) {
+    while (dealer_hand > 21 && dealer_aces > 0) {
       console.log('accounting for dealer aces', dealer_aces)
       dealer_hand -= 10;
       dealer_aces -= 1;
       console.log(dealer_hand);
     }
-    if (dealer_hand>17) {
+    if (dealer_hand > 17) {
       dealer_stand()
       blah = true;
     }
-    else if (dealer_hand===17 && dealer_aces===0) {
+    else if (dealer_hand === 17 && dealer_aces === 0) {
       dealer_stand()
       blah = true;
     }
@@ -328,7 +328,7 @@ function double() {
     console.log('doubled!');
     stack = stack - pot;
     document.querySelector(".stack").innerHTML = `Your stack: ${stack}`;
-    pot = pot*2;
+    pot = pot * 2;
     hit();
     stand();
   }
@@ -339,7 +339,7 @@ function showNotification(text) {
   notification.innerHTML = text;
   notification.style.display = 'block';
 
-  setTimeout(function() {
+  setTimeout(function () {
     notification.style.display = 'none';
   }, 3000);
 }
@@ -349,9 +349,9 @@ function get_winner(a, b) {
   console.log("get winner")
   let winner;
   if (a <= 21 && a > b) { winner = 'player' }
-  else if (a<=21 && b>21) { winner = 'player' }
-  else if (a === b && a+b <= 42) { winner = 'push' }
-  else if (b>a && b<=21) { winner = 'dealer' }
+  else if (a <= 21 && b > 21) { winner = 'player' }
+  else if (a === b && a + b <= 42) { winner = 'push' }
+  else if (b > a && b <= 21) { winner = 'dealer' }
   else if (player_hand > 21) { winner = 'dealer' }
   return winner;
 }
