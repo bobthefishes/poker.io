@@ -26,10 +26,8 @@ socket.on("show cards", (playera,playerb,playerc,playerd)=>{
     dealcards(".playerA_card",playera);
     dealcards(".playerB_card",playerb);
     if (playerc){
-        console.log("jo")
         dealcards(".playerC_card",playerc);
         if (playerd){
-            console.log("Joijoj")
             dealcards(".playerD_card",playerd);
         }
     }
