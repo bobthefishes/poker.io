@@ -200,9 +200,6 @@ function sendhtml(req, res, file) {
     let file_path = path.join(__dirname, "app", `${file}`);
     res.sendFile(file_path);
 }
-app.get("/", (req, res) => {
-    res.redirect("/home");
-});
 app.get("/leaderboard", (req, res) => {
     sendhtml(req, res, "leaderboard.html");
 });
@@ -224,6 +221,9 @@ app.get("/blackjack", (req, res) => {
 app.get("/roulette", (req, res) => {
     sendhtml(req, res, "roulette.html");
 });
+app.all("*", (req,res)=>{
+    res.redirect("/home");
+})
 http.listen(port, () => {
     console.log(`Server is listening on port ${port}`)
 })
