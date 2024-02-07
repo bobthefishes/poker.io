@@ -90,7 +90,7 @@ async function join_room(socket, roomID, UID) {
         socket.emit("invalid room");
     }
     else {
-        if (rooms[roomID].players.length >= 4) {
+        if (rooms[roomID].players.length >= rooms[roomID].nplayers) {
             socket.emit("invalid (full) room");
         }
         else {
