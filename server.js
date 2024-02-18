@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const app = express();
 const http = require("http").Server(app);
-const port = 8000;
+const PORT = 8000;
 const io = require("socket.io")(http);
 const poker = require("./pokerserver/pokerback.js");
 let storedUID = {};
@@ -11,7 +11,7 @@ let rooms = {};
 let accountbyUID = {};
 let accountbyUname = {};
 
-
+/*ACCOUNTS*/
 class Account {
     constructor(UID, uname, pwd, fname, winnings = 0) {
         this.UID = UID;
@@ -66,6 +66,33 @@ function sign_up(socket, UID, uname, pwd, fname) {
         saveaccounts()
     }
 }
+async function log_out(socket, UID) {
+    const validlogin = await new Promise((resolve, reject) => {
+        if (accountbyUID[UID].ingame) {
+            resolve(false);
+        } else {
+            socket.emit("querylocation");
+            socket.on("locationanswer", (location) => {
+                const pathnames = ["/blackjack", "/roulette"]; //poker removed as in game tester
+                if (pathnames.includes(location)) {
+                    resolve(false);
+                }
+                else {
+                    resolve(true)
+                }
+            });
+        }
+    });
+    if (validlogin) {
+        delete storedUID[UID];
+        socket.emit("reloadpage");
+    }
+    else {
+        socket.emit("message", "You cannot log out whilst in a game");
+    }
+}
+
+/*POKER*/
 function create_room(socket, UID,nplayers) {
     if (nplayers > 4 || nplayers < 2){
         socket.emit("invalid room params");
@@ -113,47 +140,15 @@ async function join_room(socket, roomID, UID) {
         }
     }
 }
-async function UIDsetup(socket, UID) {
-    if (!UID || !storedUID[UID]) {
-        socket.emit("UID", socket.id);
-        UID = socket.id;
-        storedUID[UID] = { "disconnecttimer": null };
-    }
-    else {
-        clearTimeout(storedUID[UID].disconnecttimer)
-        storedUID[UID].disconnecttimer = null;
-    }
-    return UID
-}
-async function log_out(socket, UID) {
-    const validlogin = await new Promise((resolve, reject) => {
-        if (accountbyUID[UID].ingame) {
-            resolve(false);
-        } else {
-            socket.emit("querylocation");
-            socket.on("locationanswer", (location) => {
-                const pathnames = ["/blackjack", "/roulette"]; //poker removed as in game tester
-                if (pathnames.includes(location)) {
-                    resolve(false);
-                }
-                else {
-                    resolve(true)
-                }
-            });
-        }
-    });
-    if (validlogin) {
-        delete storedUID[UID];
-        socket.emit("reloadpage");
-    }
-    else {
-        socket.emit("message", "You cannot log out whilst in a game");
-    }
-}
+
+
+/*GAMEWINNINGS*/
 function gamewinnings(UID, gamewinnings) {
     accountbyUID[UID].winnings += gamewinnings;
     saveaccounts();
 }
+
+/*LEADERBOARDS*/
 function returnplayerwinnings(socket){
     let returnval = [];
     let i = 1
@@ -167,13 +162,28 @@ function returnplayerwinnings(socket){
     }
     socket.emit("player winnings",returnval);
 }
-function disconnect(socket, UID) {
-    try {
-        accountbyUID[UID].ingame = false;
+
+/*SETUP AND SERVER*/
+async function UIDsetup(socket, UID) {
+    if (!UID || !storedUID[UID]) {
+        socket.emit("UID", socket.id);
+        UID = socket.id;
+        storedUID[UID] = { "disconnecttimer": null };
     }
-    catch { }
+    else {
+        clearTimeout(storedUID[UID].disconnecttimer)
+        storedUID[UID].disconnecttimer = null;
+    }
+    return UID
+}
+
+function disconnect(socket, UID) {
+    try{}
+    catch {}
     //add poker logic
 };
+
+
 io.on("connection", (socket) => {
     socket.emit("SendUID");
     socket.on("ReturnUID", UID => {
@@ -183,27 +193,32 @@ io.on("connection", (socket) => {
                 socket.emit("check location", accountbyUID, UID);
             }
             socket.emit("page loaded");
-            socket.on("create room", (nplayers) => { create_room(socket, UID,nplayers) });
-            socket.on("join room", (room) => { join_room(socket, room, UID) });
+            /*Account*/
             socket.on("sign up", (uname, pwd, fname) => { sign_up(socket, UID, uname, pwd, fname) });
             socket.on("log in", (uname, pwd) => { login(socket, UID, uname, pwd) });
-            socket.on("return player winnings", ()=>{returnplayerwinnings(socket)})
             socket.on("log out", () => { log_out(socket, UID) });
+            /*Poker*/
+            socket.on("create room", (nplayers) => { create_room(socket, UID,nplayers) });
+            socket.on("join room", (room) => { join_room(socket, room, UID) });
+            /*Gamewinnings*/
+            socket.on("return player winnings", ()=>{returnplayerwinnings(socket)})
+            /*Server*/
             socket.on("disconnect", () => { disconnect(socket, UID) });
-            socket.on("disconnecting", ()=>{
-            })
         }, 15);
     });
 });
-try {
-    loadaccounts();
-}
-catch { }
+
+
+
+try {loadaccounts();}catch {}
 process.on("uncaughtException", async () => {
     console.error(error);
     await saveaccounts();
     process.exit(1)
 })
+
+/*APP*/
+
 app.use(express.static(path.join(__dirname, 'app', 'public')));
 function sendhtml(req, res, file) {
     let file_path = path.join(__dirname, "app", `${file}`);
@@ -233,6 +248,6 @@ app.get("/roulette", (req, res) => {
 app.all("*", (req,res)=>{
     res.redirect("/home");
 })
-http.listen(port, () => {
-    console.log(`Server is listening on port ${port}`)
+http.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`)
 })

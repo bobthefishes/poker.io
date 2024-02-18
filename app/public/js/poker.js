@@ -84,8 +84,6 @@ socket.on("Show winnings", (winnings) =>{
     else{
         alert("You did not loose or make money");
     }
-    socket.emit("gamewinnings", (winnings));
-
     ingame = false;
 })
 socket.on("game starting", () =>{
