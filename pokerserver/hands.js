@@ -58,7 +58,7 @@ function is_flush(deck, returnflushdeck = false) {
         let suit_deck = suit_lists[suit]
         if (suit_deck.length >= 5) {
             if (!returnflushdeck) {
-                return [true, suit_deck.at(-1)[0]]
+                return [true, suit_deck[suit_deck.length-1][0]]
             } else {
                 return suit_deck
             }
@@ -86,7 +86,7 @@ function is_straight(deck) {
     for (let x of slice) {
         slice_val.push(x[0]);
     }
-    if (slice_val.join("") === [2, 3, 4, 5].join("") && unique_deck.at(-1)[0] === 14) {
+    if (slice_val.join("") === [2, 3, 4, 5].join("") && unique_deck[unique_deck.length-1][0] === 14) {
         return [true, 5]
     }
     return [false]
@@ -126,83 +126,42 @@ function is_pair(deck) {
 function highcard(deck) {
     return deck[deck.length-1][0]
 }
-function handvalue(player, player_cards, community_cards, raw = false) {
+function handvalue(player_cards, community_cards) {
     let deck = make_deck(player_cards, community_cards);
-    if (!raw) {
-        let straight_flush = is_straight_flush(deck);
-        if (straight_flush[0]) {
-            if (straight_flush[1] === 14) {
-                return `You have a royal flush`
-            }
-            return `You have a ${straight_flush[1]} high straight flush`
-        }
-        let four_of_a_kind = is_four_of_a_kind(deck);
-        if (four_of_a_kind[0]) {
-            return `You have a ${four_of_a_kind[1]} high four of a kind`
-        }
-        let full_house = is_full_house(deck);
-        if (full_house[0]) {
-            return `You have a full house: ${full_house[1]} full of ${full_house[2]}`
-        }
-        let flush = is_flush(deck);
-        if (flush[0]) {
-            return `You have a ${flush[1]} high flush`
-        }
-        let straight = is_straight(deck);
-        if (straight[0]) {
-            return `You have a ${straight[1]} high straight`
-        }
-        let three_of_a_kind = is_three_of_a_kind(deck);
-        if (three_of_a_kind[0]) {
-            return `You have a ${three_of_a_kind[1]} high three of a kind`
-        }
-        let two_pair = is_two_pair(deck);
-        if (two_pair[0]) {
-            return `You have a ${two_pair[1]}, ${two_pair[2]} high two pair`
-        }
-        let pair = is_pair(deck);
-        if (pair[0]) {
-            return `You have a ${pair[1]} high pair`
-        }
-        else {
-            return `You have a ${highcard(deck)} highcard`
-        }
-    } else {
-        let straight_flush = is_straight_flush(deck);
-        if (straight_flush[0]) {
-            return ["straight_flush", straight_flush[1]]
-        }
-        let four_of_a_kind = is_four_of_a_kind(deck);
-        if (four_of_a_kind[0]) {
-            return ["four_of_a_kind", four_of_a_kind[1]]
-        }
-        let full_house = is_full_house(deck);
-        if (full_house[0]) {
-            return ["full_house", full_house[1], full_house[2]]
-        }
-        let flush = is_flush(deck);
-        if (flush[0]) {
-            return ["flush", flush[1]]
-        }
-        let straight = is_straight(deck);
-        if (straight[0]) {
-            return ["straight", straight[1]]
-        }
-        let three_of_a_kind = is_three_of_a_kind(deck);
-        if (three_of_a_kind[0]) {
-            return ["three_of_a_kind", three_of_a_kind[1]]
-        }
-        let two_pair = is_two_pair(deck);
-        if (two_pair[0]) {
-            return ["two_pair", two_pair[1], two_pair[2]]
-        }
-        let pair = is_pair(deck);
-        if (pair[0]) {
-            return ["pair", pair[1]]
-        }
-        else {
-            return ["highcard", highcard(deck)]
-        }
+    let straight_flush = is_straight_flush(deck);
+    if (straight_flush[0]) {
+        return ["straight_flush", straight_flush[1]]
+    }
+    let four_of_a_kind = is_four_of_a_kind(deck);
+    if (four_of_a_kind[0]) {
+        return ["four_of_a_kind", four_of_a_kind[1]]
+    }
+    let full_house = is_full_house(deck);
+    if (full_house[0]) {
+        return ["full_house", full_house[1], full_house[2]]
+    }
+    let flush = is_flush(deck);
+    if (flush[0]) {
+        return ["flush", flush[1]]
+    }
+    let straight = is_straight(deck);
+    if (straight[0]) {
+        return ["straight", straight[1]]
+    }
+    let three_of_a_kind = is_three_of_a_kind(deck);
+    if (three_of_a_kind[0]) {
+        return ["three_of_a_kind", three_of_a_kind[1]]
+    }
+    let two_pair = is_two_pair(deck);
+    if (two_pair[0]) {
+        return ["two_pair", two_pair[1], two_pair[2]]
+    }
+    let pair = is_pair(deck);
+    if (pair[0]) {
+        return ["pair", pair[1]]
+    }
+    else {
+        return ["highcard", highcard(deck)]
     }
 }
 function make_deck(player_cards, community_cards) {

@@ -86,16 +86,19 @@
             </div>
         </div>
     </div>
-    <div>
-        <h2 class="createroom_header">Create or join a room:</h2>
-        <div class="room_id_container">
-            <form class="room_form" onsubmit="room(event)">
-                <input type="text" pattern="[0-9]*" placeholder="Room id" class="roominput">
-                <button type="submit" class="roomid_button submit_button">Submit</button>
-            </form>
-            <p class="roomID">Room ID:</p>
-            <button class="roomid_button createroom_button">Createroom</button>
-        </div>
+    <h2 class="createroom_header">Create or join a room:</h2>
+    <div class="room_id_container">
+        <form class="room_form" onsubmit="room(event)">
+            <input type="text" pattern="[0-9]*" placeholder="Room id" class="roominput">
+            <button type="submit" class="roomid_button submit_button">Submit</button>
+            <select id="nplayers">
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+            </select>
+        </form>
+        <p class="roomID">Room ID:</p>
+        <button class="roomid_button createroom_button">Createroom</button>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>

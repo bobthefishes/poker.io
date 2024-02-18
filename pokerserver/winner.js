@@ -33,18 +33,18 @@ function winner(playerA_deck, playerA_hand_strength, playerB_deck, playerB_hand_
             return "2"
         }
     }
-    let hand_type = handstrength[playerA_hand_strength[0]]
+    let hand_type = handstrength[playerA_hand_strength[0]]  
     if (hand_type === 9 || hand_type === 7 || hand_type === 5) {
         return "S"
     }
     if (hand_type === 6 || hand_type === 3) {
         return kicker(hand_type, [playerA_hand_strength[1], playerA_hand_strength[2]], playerA_deck, playerB_deck)
     }
-    return kicker(hand_type, playerA_hand_strength[1], playerA_deck, playerB_deck)
+    return kicker(hand_type, playerA_hand_strength.slice(1), playerA_deck, playerB_deck)
 }
 function kicker(hand_type, handstrength, playerA_deck, playerB_deck) {
-    let A_filter_deck = filter_deck(playerA_deck, [[handstrength]]).sort(function (a, b) { return b[0] - a[0] });
-    let B_filter_deck = filter_deck(playerB_deck, [[handstrength]]).sort(function (a, b) { return b[0] - a[0] });
+    let A_filter_deck = filter_deck(playerA_deck, handstrength).sort(function (a, b) { return b[0] - a[0] });
+    let B_filter_deck = filter_deck(playerB_deck, handstrength).sort(function (a, b) { return b[0] - a[0] });
     if (hand_type === 8) {
         if (A_filter_deck[0] > B_filter_deck[0]) {
             return "1"
@@ -103,7 +103,7 @@ function multiplayerwinner(player_cards,community_cards){ //give playercards as 
     for (const player in player_cards) {
         hands[player] = {
             "Deck":strengthdecoder.make_deck(player_cards[player],community_cards),
-            "Strength":strengthdecoder.handvalue(null,player_cards[player],community_cards,true)
+            "Strength":strengthdecoder.handvalue(player_cards[player],community_cards)
         };
     }
     let overallwinner;

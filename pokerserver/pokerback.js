@@ -36,7 +36,7 @@ const game_deck = new Deck();
 game_deck.shufflecards();
 
 class room_instance{
-    constructor(roomID){
+    constructor(roomID,nplayers){
         this.roomID = roomID;
         this.players = [];
         this.activeplayers = [];
@@ -44,6 +44,7 @@ class room_instance{
         this.potsize = 0;
         this.bettingplayers = [];
         this.playerbyletter = {};
+        this.nplayers = nplayers;
     }
 }
 class player_instance{
@@ -150,9 +151,6 @@ async function playersgo(io,room_instance){
     while (!roundfinished){
         if (room_instance.bettingplayers.length !== 1 && room_instance.activeplayers.length > 0){
             const player = room_instance.activeplayers[index];
-            //const lastplayer = (room_instance.bettingplayers.indexOf(player)>0)?
-            //room_instance.bettingplayers[room_instance.bettingplayers.indexOf(player)-1]:
-            //room_instance.bettingplayers[room_instance.bettingplayers.length-1]
             let lastplayer;
             for (let i = room_instance.bettingplayers.indexOf(player);i>=0;i--){
                 if (i === 0){
@@ -199,12 +197,16 @@ async function playersgo(io,room_instance){
     }
 }
 function showcards(io,room_instance){
-    io.to(room_instance.roomID).emit("show cards",
-    room_instance.players[0].player_cards,
-    room_instance.players[1].player_cards,
-    room_instance.players[2].player_cards,
-    room_instance.players[3].player_cards
-    );
+    let playerscards = []
+    for (let i = 0; i < 4; i++) {
+        if (i < room_instance.players.length){
+            playerscards.push(room_instance.players[i].player_cards);
+        }
+        else{
+            playerscards.push(null);
+        }
+    }
+    io.to(room_instance.roomID).emit("show cards",...playerscards);
 }
 function winner(io,room_instance){
     let bettingcards = {};
@@ -245,7 +247,6 @@ async function game_round(io,room_instance){
         await playersgo(io,room_instance);
         showcards(io,room_instance);
         winner(io,room_instance);
-        io.to(roomID).emit("reload page")
         resolve(room_instance.players);
     });
 }

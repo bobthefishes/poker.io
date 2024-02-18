@@ -2,6 +2,7 @@
 
 
 
+//add socket.on("spin wheel", async ()=>{roulette_spin(socket)}); to server.js
+async function roulette_spin(socket){
 
-async function roulette_spin(io,socket){
 }

@@ -12,34 +12,33 @@ socket.on("player cards", (dealtcards,letter) => {
     dealcards(".player_card",dealtcards);
     dealcards(`.player${letter}_card`,dealtcards);
 })
-function resetactiontext(){
-    document.querySelector(".playeractionA").innerHTML = "PlayerA";
-    document.querySelector(".playeractionB").innerHTML = "PlayerB";
-    document.querySelector(".playeractionC").innerHTML = "PlayerC";
-    document.querySelector(".playeractionD").innerHTML = "PlayerD";
-}
 socket.on("flop", (dealtcards) => {
     dealcards(".flop",dealtcards);
-    resetactiontext();
 })
 socket.on("turn", (dealtcards) => {
     dealcards(".turn",[dealtcards]);
-    resetactiontext();
 })
 socket.on("river", (dealtcards) => {
     dealcards(".river",[dealtcards]);
-    resetactiontext();
 })
 socket.on("show cards", (playera,playerb,playerc,playerd)=>{
+    console.log(playera,playerb,playerc,playerd);
     dealcards(".playerA_card",playera);
     dealcards(".playerB_card",playerb);
-    dealcards(".playerC_card",playerc);
-    dealcards(".playerD_card",playerd);
+    if (playerc){
+        dealcards(".playerC_card",playerc);
+        if (playerd){
+            dealcards(".playerD_card",playerd);
+        }
+    }
+    
 })
 socket.on("show player decision", (letter,action,uname,potsize) =>{
-    const decisionblock = document.querySelector(`.playeraction${letter}`);
     if (action[0] === "fold"){
         showNotification(`${uname}: Fold`, `noti${letter}`)
+        document.querySelectorAll(`.player${letter}_card`).forEach((card)=> {
+            card.classList.add("greyscale");
+        });
     }
     else if (action[0] === "check"){
         showNotification(`${uname}: Check`, `noti${letter}`)
@@ -86,14 +85,14 @@ socket.on("Show winnings", (winnings) =>{
         alert("You did not loose or make money");
     }
     socket.emit("gamewinnings", (winnings));
+
+    ingame = false;
 })
 socket.on("game starting", () =>{
-    chatmessage("The game is now starting");
     showNotification('Game starting...', 'noti');
-    document.querySelectorAll(".card").classList.remove('greyscale');
     document.querySelector(".pot_container").style.visibility = 'visible';
 })
-
+let ingame = false;
 let globalcall;
 let globalstack;
 let globalbetoffset;
@@ -142,11 +141,15 @@ function choicecompleted(){
     document.querySelector(".fold_btn").style.visibility = "hidden";
 }
 socket.on("decision valid", () => {choicecompleted()});
-window.onload = () => {choicecompleted()};
-/*Rooms */
+socket.on("page loaded", () => {choicecompleted()});
 socket.on("joined room", (roomID,letter,uname) => {
-    document.querySelector(".room_id_container").classList.add('removeID');
-    document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
+    if (document.querySelector(".room_id_container")){
+        document.querySelector(".room_id_container").classList.add('removeID');
+        setTimeout(() => {
+            document.querySelector(".room_id_container").parentNode.removeChild(document.querySelector(".room_id_container"));  
+        },500);
+        document.querySelector(".createroom_header").innerHTML = `Room ID: ${roomID}`;
+    }
     showNotification(`${uname} joined!`,`noti${letter}`);
     LETTERS = ["A","B","C","D"];
     LETTERS.forEach((playerletter)=>{
@@ -157,6 +160,7 @@ socket.on("joined room", (roomID,letter,uname) => {
             card.classList.remove("greyscale");
         });
     });
+    ingame = true;
 })
 socket.on("invalid (full) room", ()=>{
     document.querySelector(".roomID").innerHTML = "Full room";
@@ -166,8 +170,12 @@ socket.on("invalid room", () =>{
     document.querySelector(".roomID").innerHTML = "Invalid room";
     document.querySelector(".roominput").value = null;
 })
+socket.on("invalid room params", ()=>{
+    document.querySelector(".roomID").innerHTML = "Invalid room settings";
+})
 document.querySelector(".createroom_button").addEventListener("click", () => {
-    socket.emit("create room");
+    const nplayers = Number(document.getElementById("nplayers").value);
+    socket.emit("create room",nplayers);
 })
 function room(event){
     event.preventDefault();
@@ -182,3 +190,8 @@ function showNotification(text, target) {
       notification.style.display = 'none';
     }, 3000);
   }
+window.addEventListener('beforeunload', function (e) {
+    if (ingame){
+        e.returnValue = true;
+    }
+});

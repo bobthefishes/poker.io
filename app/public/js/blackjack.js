@@ -49,6 +49,7 @@ game_deck.shufflecards();
 
 let player_card_values = [];
 function turn_over_playerCard(card) {
+  console.log("turn over player");
   var value = 0;
   card.classList.add("flip");
   var next_card = game_deck.returncard();
@@ -85,6 +86,7 @@ function turn_over_playerCard(card) {
 }
 
 function turn_over_dealerCard(card) {
+  console.log("turn over dealer");
   var value = 0;
   card.classList.add("flip");
   var next_card = game_deck.returncard();
@@ -101,6 +103,7 @@ function turn_over_dealerCard(card) {
 }
 
 function player_card() {
+  console.log("player card")
   if (!done_deal && done_bet) {
     done_deal = true;
     const Cards = document.querySelectorAll(".player_card");
@@ -129,6 +132,7 @@ function player_card() {
 }
 
 function dealer_card() {
+  console.log("dealers card")
   if (done_bet) {
     const Cards = document.querySelectorAll(".dealer_card");
     var n = 0;
@@ -143,11 +147,13 @@ function dealer_card() {
 }
 
 function hide_stuff() {
+  console.log("hidestuff")
   document.querySelector(".play_again_btn").style.visibility = "visible";
   document.querySelector(".betting_container").classList.add('remove');
 }
 
 function go_again() {
+  console.log("go again");
   player_card_values = [];
   player_aces = 0;
   player_aces1 = 0;
@@ -211,11 +217,12 @@ let bet;
 let stack = 5000;
 let done_stand = false;
 let blackjack = false;
-window.onload = function () {
+socket.on("page loaded",()=> {
   document.querySelector(".stack").innerHTML = `Your stack: £${stack}`;
-}
+});
 
 function handle_betInput() {
+  console.log("bet input ")
   let inputValue = document.querySelector(".bet_input").value;
   inputValue = inputValue.replace(/[^0-9]/g, '');
   if (inputValue.length > 3) {
@@ -226,6 +233,7 @@ function handle_betInput() {
 }
 
 function make_bet() {
+  console.log("make bet");
   if (done_deal === false && bet_input.value >= 50) {
     bet_input.disabled = true;
     done_bet = true;
@@ -237,6 +245,7 @@ function make_bet() {
 }
 
 async function dealer_stand() {
+  console.log("dealer stand");
   let winners = [];
   if (!done_split) {
     winners.push(get_winner(player_hand, dealer_hand));
@@ -454,65 +463,37 @@ function hitAction() {
 }
 
 function dealer_hit() {
-  let dealer_hit_again = true;
-  while (dealer_hit_again) {
-    console.log('dealer hits again...')
-    if (!done_split) {
-      while ((dealer_hand<17 || (dealer_hand===17 && dealer_aces>0)) && player_hand<=21) {
-        num_hits_dealer++;
-        const newCard = document.createElement('div')
-        document.querySelector('.dealer_cards').appendChild(newCard);
-        newCard.classList.add('card');
-        newCard.classList.add('dealer_card');
-        newCard.classList.add(`card${num_hits_dealer}`);
-        turn_over_dealerCard(newCard);
-        console.log(`dealer hand: ${dealer_hand}`)
-      }
-      while (dealer_hand>21 && dealer_aces>0) {
-        console.log('accounting for dealer aces', dealer_aces)
-        dealer_hand -= 10;
-        dealer_aces -= 1;
-        console.log(dealer_hand);
-      }
-      if (dealer_hand>17) {
-        dealer_stand()
-        dealer_hit_again = false;
-      }
-      else if (dealer_hand===17 && dealer_aces===0) {
-        dealer_stand()
-        dealer_hit_again = false;
-      }
+  let blah = false;
+  while (!blah) {
+    while (dealer_hand<17 && player_hand<=21) {
+      num_hits_dealer++;
+      const newCard = document.createElement('div')
+      document.querySelector('.dealer_cards').appendChild(newCard);
+      newCard.classList.add('card');
+      newCard.classList.add('dealer_card');
+      newCard.classList.add(`card${num_hits_dealer}`);
+      turn_over_dealerCard(newCard);
+      console.log(`dealer hand: ${dealer_hand}`)
     }
-    else if (done_split) {
-      while (dealer_hand<17 && (split_hand1 <= 21 || split_hand2 <= 21)) {
-        num_hits_dealer++;
-        const newCard = document.createElement('div')
-        document.querySelector('.dealer_cards').appendChild(newCard);
-        newCard.classList.add('card');
-        newCard.classList.add('dealer_card');
-        newCard.classList.add(`card${num_hits_dealer}`);
-        turn_over_dealerCard(newCard);
-        console.log(`dealer hand: ${dealer_hand}`)
-      }
-      while (dealer_hand>21 && dealer_aces>0) {
-        console.log('accounting for dealer aces', dealer_aces)
-        dealer_hand -= 10;
-        dealer_aces -= 1;
-        console.log(dealer_hand);
-      }
-      if (dealer_hand>17) {
-        dealer_stand()
-        dealer_hit_again = false;
-      }
-      else if (dealer_hand===17 && dealer_aces===0) {
-        dealer_stand()
-        dealer_hit_again = false;
-      }
+    while (dealer_hand>21 && dealer_aces>0) {
+      console.log('accounting for dealer aces', dealer_aces)
+      dealer_hand -= 10;
+      dealer_aces -= 1;
+      console.log(dealer_hand);
+    }
+    if (dealer_hand>17) {
+      dealer_stand()
+      blah = true;
+    }
+    else if (dealer_hand===17 && dealer_aces===0) {
+      dealer_stand()
+      blah = true;
     }
   }
 }
 
 function double() {
+  console.log("double")
   if (num_hits === 2 && done_deal) {
     console.log('doubled!');
     stack = stack - pot;
@@ -539,6 +520,7 @@ function showNotification(text, notiboxID) {
 
 //winner
 function get_winner(a, b) {
+  console.log("get winner")
   let winner;
   if (a <= 21 && a > b) { winner = 'player' }
   else if (a<=21 && b>21) { winner = 'player' }
