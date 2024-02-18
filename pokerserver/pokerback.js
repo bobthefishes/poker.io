@@ -224,9 +224,12 @@ function winner(io,room_instance){
         room_instance.playerbyletter[letter].stack += sharedpot;
     });
     io.to(room_instance.roomID).emit("winners", winningplayers);
+    winnings = {}
     room_instance.players.forEach((player)=>{
         player.socket.emit("Show winnings",(player.stack-5000));
+        winnings[player.UID] = (player.stack-5000)
     });
+    return winnings
 }
 async function game_round(io,room_instance){
     return new Promise(async(resolve, reject) => {
@@ -246,8 +249,8 @@ async function game_round(io,room_instance){
         dealriver(io,room_instance,roomID);
         await playersgo(io,room_instance);
         showcards(io,room_instance);
-        winner(io,room_instance);
-        resolve(room_instance.players);
+        winnings = winner(io,room_instance);
+        resolve([room_instance.players, winnings]);
     });
 }
 module.exports = {

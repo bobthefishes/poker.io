@@ -99,10 +99,15 @@ async function join_room(socket, roomID, UID) {
             io.to(roomID).emit("joined room", roomID, poker.LETTERS[rooms[roomID].players.length - 1], accountbyUID[UID].uname);
             accountbyUID[UID].ingame = true;
             if (rooms[roomID].players.length === rooms[roomID].nplayers) {
-                const players = await poker.game_round(io, rooms[roomID]);
+                const game = await poker.game_round(io, rooms[roomID]);
+                const players = game[0]
+                const winnings = game[1]
                 players.forEach((player) => {
                     accountbyUID[player.UID].ingame = false;
-                })
+                });
+                for (const player in winnings){
+                    gamewinnings(player,winnings[player])
+                }
                 delete rooms[roomID];
             }
         }
@@ -151,9 +156,14 @@ function gamewinnings(UID, gamewinnings) {
 }
 function returnplayerwinnings(socket){
     let returnval = [];
+    let i = 1
     for (const UID in accountbyUID){
+        if (i == 50){
+            break
+        }
         const account = accountbyUID[UID]
         returnval.push([account.uname,account.winnings, account.UID]);
+        i++
     }
     socket.emit("player winnings",returnval);
 }
@@ -177,7 +187,6 @@ io.on("connection", (socket) => {
             socket.on("join room", (room) => { join_room(socket, room, UID) });
             socket.on("sign up", (uname, pwd, fname) => { sign_up(socket, UID, uname, pwd, fname) });
             socket.on("log in", (uname, pwd) => { login(socket, UID, uname, pwd) });
-            socket.on("gamewinnings", (winnings) => { gamewinnings(UID, winnings) });
             socket.on("return player winnings", ()=>{returnplayerwinnings(socket)})
             socket.on("log out", () => { log_out(socket, UID) });
             socket.on("disconnect", () => { disconnect(socket, UID) });
