@@ -33,6 +33,7 @@
     </div>
     <h1 class="blackjack_title">~BLACKJACK~</h1>
     <div id="notification" class="notification"></div>
+    <div id="notification2" class="notification"></div>
     <p class="bet_info">Minimum bet £50, maximum £999</p>
     <h1 class="stack"></h1>
     <div class="play_again_container">
@@ -48,16 +49,13 @@
     <div class="player_cards">
         <div class="card player_card card1" id="playerCard1"></div>
         <div class="card player_card card2" id="playerCard2"></div>
-        <button class="hit_btn button" onclick="hit()">Hit</button>
+        <p class="hand_indicator"></p>
+        <button class="hit_btn button" onclick="hitAction()">Hit</button>
         <button class="stand_btn button" onclick="stand()">Stand</button>
         <button class="double_btn button" onclick="double()">Double</button>
     </div>
-    <div>
-        <div class="testing_container">
-            <p>Testing stuff</p>
-            <p class="winner">Winner:</p>
-        </div>
-    </div>
+    <div class="split_hand1"></div>
+    <div class="split_hand2"></div>
     <div>
         <div class="betting_container">
             <p id="betting_text">Bet (£):</p>
