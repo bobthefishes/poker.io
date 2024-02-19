@@ -37,7 +37,7 @@ function winner(playerA_deck, playerA_hand_strength, playerB_deck, playerB_hand_
     if (hand_type === 9 || hand_type === 7 || hand_type === 5) {
         return "S"
     }
-    if (hand_type === 6 || hand_type === 3) {
+    if (hand_type === 3) {
         return kicker(hand_type, [playerA_hand_strength[1], playerA_hand_strength[2]], playerA_deck, playerB_deck)
     }
     return kicker(hand_type, playerA_hand_strength.slice(1), playerA_deck, playerB_deck)
