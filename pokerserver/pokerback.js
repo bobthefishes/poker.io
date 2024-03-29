@@ -3,6 +3,7 @@ const BIGBLIND = 20;
 const LETTERS = ["A","B","C","D"];
 const SUITS = ["Hearts","Diamonds","Clubs","Spades"];
 const ROUNDS = ["Preflop","Flop","Turn","River"]
+const nodemon = require("nodemon");
 const winnerdecoder = require("./winner.js");
 class Deck {
     constructor() {
@@ -32,8 +33,6 @@ class Deck {
         return this.deck.pop();
     }
 };
-const game_deck = new Deck();
-game_deck.shufflecards();
 
 class room_instance{
     constructor(roomID,nplayers){
@@ -45,6 +44,8 @@ class room_instance{
         this.bettingplayers = [];
         this.playerbyletter = {};
         this.nplayers = nplayers;
+        this.game_deck = new Deck();
+        this.game_deck.shufflecards();
     }
 }
 class player_instance{
@@ -62,7 +63,7 @@ class player_instance{
         this.stack = 5000;
         this.go = []; //[type,betamount,callamountoveride,roundtype]
         this.roundbetamount = 0;
-        this.round = ROUNDS[0]
+        this.round = [0]
     }
 }
 function blinds(io,room_instance,roomID){
@@ -75,21 +76,21 @@ function blinds(io,room_instance,roomID){
 }
 function dealplayercards(room_instance){
     room_instance.players.forEach((player) => {
-        const playercards = [game_deck.returncard(),game_deck.returncard()];
+        const playercards = [room_instance.game_deck.returncard(),room_instance.game_deck.returncard()];
         player.player_cards = playercards;
         player.socket.emit("player cards", playercards);
     });
 }
 function dealflop(io,room_instance,roomID){
-    room_instance.community_cards.push(game_deck.returncard(),game_deck.returncard(),game_deck.returncard());
+    room_instance.community_cards.push(room_instance.game_deck.returncard(),room_instance.game_deck.returncard(),room_instance.game_deck.returncard());
     io.to(roomID).emit("flop", room_instance.community_cards);
 }
 function dealturn(io,room_instance,roomID){
-    room_instance.community_cards.push(game_deck.returncard());
+    room_instance.community_cards.push(room_instance.game_deck.returncard());
     io.to(roomID).emit("turn", room_instance.community_cards[3]);
 }
 function dealriver(io,room_instance,roomID){
-    room_instance.community_cards.push(game_deck.returncard());
+    room_instance.community_cards.push(room_instance.game_deck.returncard());
     io.to(roomID).emit("river", room_instance.community_cards[4]);
 }
 function playerfold(player,room_instance){
@@ -232,8 +233,9 @@ function winner(io,room_instance){
     return winnings
 }
 async function game_round(io,room_instance){
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async(resolve) => {
         const roomID = room_instance.roomID;
+        console.log(room_instance.game_deck)
         blinds(io,room_instance,roomID);
         io.to(roomID).emit("game starting");
         room_instance.round = ROUNDS[0];
